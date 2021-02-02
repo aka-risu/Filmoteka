@@ -50,6 +50,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "handlebars": "^4.7.6"
+    "handlebars": "^4.7.6",
+    "jquery": "^3.5.1",
+    "js-paginator": "0.0.3",
+    "jw-paginate": "^1.0.4",
+    "paginationjs": "^2.1.5",
+    "react-pagination-js": "^2.0.0"
   }
 }

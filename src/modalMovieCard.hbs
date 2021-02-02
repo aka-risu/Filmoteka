@@ -1,0 +1,32 @@
+<div class="backdrop">
+    <div class="overlay">
+        <div class="modal-window">
+            <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="">
+            <h2 class="title">{{this.title}}</h2>
+            <div class="stats-names">
+                <p class="stats-vote">Vote/Votes</p>
+                <p class="stats-popularity">Popularity</p>
+                <p class="stats-title">Title</p>
+                <p class="stats-genre">Genre</p>
+            </div>
+            <div class="stats-info">
+                <div class="stats-info-vote">
+                    <p class="stats-info-vote-average">{{this.vote_average}}</p>
+                    <p class="slash">/</p>
+                    <p class="stats-info-vote-count">{{this.vote_count}}</p>
+                </div>
+                <p class="stats-info-popularity">{{this.popularity}}</p>
+                <p class="stats-info-title">{{this.title}}</p>
+                <p class="stats-info-genre">
+                    {{#each this.genres}}
+                    {{this.name}}
+                    {{/each}}
+                </p>
+            </div>
+            <h3 class="about">About</h3>
+            <p class="film-description">{{this.overview}}</p>
+            <button class="add-watched">Add to watched</button>
+            <button class="add-queue">Add to watched</button>
+        </div>
+    </div>
+</div>

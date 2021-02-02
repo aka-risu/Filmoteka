@@ -4,29 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
     <title>Filmoteka</title>
 
    </head>
 
   <body>
-    <header>
+   <header>
      
-     <div class="wrapper-header">
+    <div class="wrapper-header">
       <div class="navigation">
         <a href=""><span>Filmoteka</span></a>
-        <ul>
+        <ul class="navigation-menu">
           <li class="navigation-home"><a href="">Home</a></li>
           <li class="navigation-my-library"><a href="">My library</a></li>
         </ul>
       </div>
     <form class="search-form">
-      <input type="text" placeholder="Search for movies">
-      <button type="submit"></button>
+      <input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies">
+      <button class="search-button" type="submit">Search</button>
     </form>
-    <p class="error-message is-hidden">Search result not successful. Enter the correct movie name</p></div>
-    </header>
+    <p class="error-message is-hidden">Search result not successful. Enter the correct movie name</p>
+    </div>
+   
+  </header>
     <main>
-      <div class="wrapper"><ul class="movies-list"></ul></div>
+      <div class="pag">
+        <div class="list" id="list"></div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+      
+      <div class="wrapper"><ul class="movies-list" id="movies-list"></ul></div>
+      <div class="modal is-hidden js-modal" >
+        
+      </div>
     </main>
    
   </body>

@@ -21,7 +21,7 @@ export default function getGenres(array) {
                 // console.log(genres)
                 return genresArr
             })
-            console.log(genres)
+            // console.log(genres)
             return array.map(function(obj, index) {
                 obj.genres = genres[index]
                 obj.release = parseInt(obj.release_date)

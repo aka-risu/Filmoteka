@@ -1,14 +1,15 @@
 {{#each this}}
 <li class="movie-card">
-    <a href="" class="movie-link"><img class="movie-img" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}"
-            alt=""></a>
-    <h2 class="movie-title">{{this.original_title}}</h2>
-    <ul class="movie-genres">{{#each this.genres}}
-        <li class="movie-genre">{{this}}</li>
-        {{/each}}
-    </ul>
+    <a href="#" class="movie-link" id="{{this.id}}">
+        <img class="movie-img" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="">
+        <h2 class="movie-title">{{this.title}}</h2>
+        <ul class="movie-genres">{{#each this.genres}}
+            <li class="movie-genre">{{this}}</li>
+            {{/each}}
+        </ul>
 
-    <p class="movie-date">{{this.release}}</p>
+        <p class="movie-date">{{this.release}}</p>
+    </a>
 </li>
 
 {{/each}}

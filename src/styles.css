@@ -21,6 +21,11 @@ h2 {
   margin: 0;
   padding: 0;
 }
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 .movies-list {
   padding: 0;
   margin: 0;
@@ -33,11 +38,22 @@ h2 {
 }
 .wrapper-header {
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   margin-right: auto;
   margin-left: auto;
 }
 .navigation {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navigation-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media screen and (max-width: 767px) {
   .wrapper-header {
@@ -108,4 +124,107 @@ h2 {
 
 .movie-img {
   width: 100%;
+}
+.pag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.list {
+  /* display: flex; */
+  width: 100%;
+  border: 1px solid #cccccc;
+}
+.list .item {
+  padding: 15px;
+  border: 1px solid #cccccc;
+}
+.list .item:last-of-type {
+  border-bottom: none;
+}
+.list .item:hover {
+  background-color: #fff;
+}
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.pagination button {
+  width: 50px;
+  height: 50px;
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background-color: #44aa44ee;
+
+  margin: 5px;
+  transition: 400ms;
+
+  color: #fff;
+  font-size: 18px;
+}
+.pagination button:hover {
+  background-color: #44aa;
+}
+.pagination button.active {
+  background-color: rgb(21, 100, 34);
+}
+.movie-card,
+.movie-img,
+.movie-title,
+.movie-genres,
+.movie-date {
+  pointer-events: none;
+}
+.movie-link {
+  pointer-events: initial;
+  display: block;
+  height: 100%;
+}
+.modal {
+  position: absolute;
+  top: 0;
+}
+
+.overlay {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+}
+.modal-window {
+  /* overflow: hidden; */
+  overflow: scroll;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  width: 80vw;
+  height: 100%;
+  padding-top: 250px;
+  padding-left: 20px;
+  padding-right: 20px;
+  /* width: 100%;
+  display: block; */
+  background-color: #fff;
+  /* position: absolute;
+  top: 0; */
+  z-index: 2;
+}
+.modal-window img {
+  width: 100%;
+}
+.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-open {
+  overflow: hidden;
 }
