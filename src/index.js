@@ -8,6 +8,7 @@ import modalMovieCard from "./modalMovieCard.hbs";
 
 const refs = {
     movieListRef: document.querySelector(".movies-list"),
+    logoRef: document.querySelector(".navigation-logo"),
     homeRef: document.querySelector(".navigation-home"),
     myLibraryRef: document.querySelector(".navigation-my-library"),
     searchFormRef: document.querySelector(".search-form"),
@@ -19,22 +20,24 @@ const refs = {
 
 
 const filmApiService = new FilmApiService
-filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
-    // filmApiService.setPage(1)
-    createPagination(array, filmApiService.page, filmApiService.totalPages)
-    // const paginator = document.querySelector(".pagination")
-    // paginator.addEventListener("click", handleSearch)
-    // paginator.removeEventListener("click", handleSearch )
-    // return pagID
-})
-    // .finally(paginator.removeEventListener("click", handleSearch))
-
-// createPagination(filmApiService.fetchTrendingMovies().then(array => getGenres(array)), filmApiService.page)
+renderTrendingMovies()
+refs.homeRef.addEventListener('click', renderMainPage)
+refs.logoRef.addEventListener('click', renderMainPage)
+function renderMainPage(e) {
+    e.preventDefault()
+    refs.searchFormRef.elements.query.value = ""
+    renderTrendingMovies()
+}
+function renderTrendingMovies() {
+    filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
+       createPagination(array, filmApiService.page, filmApiService.totalPages)
+    })
+}
 const paginator = document.querySelector(".pagination")
 paginator.addEventListener("click", trendingSearch)
 refs.searchFormRef.addEventListener("submit", search)
 refs.movieListRef.addEventListener("click", handleClickOnMovie)
-refs.modalRef.addEventListener("click", closeModal)
+
 
 function trendingSearch(event) {
     // filmApiService.setPage(1)
@@ -88,9 +91,6 @@ function search(e) {
     console.log(filmApiService.query)
     searchMovies()
     
-//    return filmApiService.fetchMovieByWord().then(array => getGenres(array)).then(array => {
-//         createPagination(array, filmApiService.page)
-//         })
 }
 function searchFilms(event) {
     return  handleSearch(event, searchMovies)
@@ -109,13 +109,17 @@ function handleClickOnMovie(event) {
     })
     console.dir(event.target.classList.value)
     refs.bodyRef.classList.add("modal-open")
-    // if(event.target.class)
-// .then(console.log(r))
+    refs.modalRef.addEventListener("click", closeModal)
+    window.addEventListener("keyup", closeModal)
 }
 function closeModal(event) {
-    //  event.preventDefault()
-    if (event.target.classList.value !== "overlay") return
-    refs.modalRef.classList.add("is-hidden")
-    refs.bodyRef.classList.remove("modal-open")
+
+    if (event.target.classList.value !== "overlay" || event.keyCode !== 27) {
+        //  if (event.keyCode !== 27) return
+        refs.modalRef.classList.add("is-hidden")
+        refs.bodyRef.classList.remove("modal-open")
+        refs.modalRef.removeEventListener("click", closeModal)
+        window.removeEventListener("keyup", closeModal)
+    }
 }
     
