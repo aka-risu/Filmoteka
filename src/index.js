@@ -1,9 +1,14 @@
 import './styles.css';
 import './fetchMovies';
+import myLibraryMovie from "./myLibraryMovie.hbs"
+import modalMovieCard from "./modalMovieCard.hbs";
 import FilmApiService from './fetchMovies';
 import getGenres from './getGenres';
 import createPagination from "./paginator";
-import modalMovieCard from "./modalMovieCard.hbs";
+import movieCard from './movieCard.hbs';
+
+import myLibrary from "./myLibrary"
+
 
 
 const refs = {
@@ -16,13 +21,20 @@ const refs = {
     paginationRef: document.querySelector(".pagination"),
     modalRef: document.querySelector(".js-modal"),
     bodyRef: document.querySelector("body"),
+    btnWatchedRef: document.querySelector(".btn-watched"),
+    btnQueueRef: document.querySelector(".btn-queue"),
+    btnAddWatched: document.querySelector(".btn-add-watched"),
+    btnAddQueue: document.querySelector(".btn-add-queue"),
 }
 
 
-const filmApiService = new FilmApiService
+const filmApiService = new FilmApiService;
+const myLibraryWatched = new myLibrary;
 renderTrendingMovies()
 refs.homeRef.addEventListener('click', renderMainPage)
 refs.logoRef.addEventListener('click', renderMainPage)
+refs.myLibraryRef.addEventListener('click', renderMyLibrary)
+
 function renderMainPage(e) {
     e.preventDefault()
     refs.searchFormRef.elements.query.value = ""
@@ -30,7 +42,7 @@ function renderMainPage(e) {
 }
 function renderTrendingMovies() {
     filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
-       createPagination(array, filmApiService.page, filmApiService.totalPages)
+       createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
     })
 }
 const paginator = document.querySelector(".pagination")
@@ -63,18 +75,19 @@ function handleSearch(event, callback) {
             // console.log(page)
         filmApiService.setPage(page)
         }
-                console.log(filmApiService.page)
+                // console.log(filmApiService.page)
      callback()
 }
     
 function getTrendingMovies() {
 filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
-        createPagination(array, filmApiService.page, filmApiService.totalPages)
+        createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
         })    
 }
+
 function searchMovies() {
 filmApiService.fetchMovieByWord().then(array => getGenres(array)).then(array => {
-        createPagination(array, filmApiService.page, filmApiService.totalPages)
+        createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
         })
 }
 function search(e) {
@@ -88,7 +101,7 @@ function search(e) {
     paginator.removeEventListener("click", searchFilms)
     paginator.addEventListener("click", searchFilms)
     
-    console.log(filmApiService.query)
+    // console.log(filmApiService.query)
     searchMovies()
     
 }
@@ -97,17 +110,31 @@ function searchFilms(event) {
 }
 function handleClickOnMovie(event) {
     event.preventDefault()
+    console.log(event.target)
     if (event.target.nodeName !== "A") return
 
-    console.log(event.target.id)
+    // console.log(event.target.id)
     filmApiService.movieID = event.target.id
     filmApiService.fetchMovieInfo().then(obj => {
         refs.modalRef.innerHTML = ""
         refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj))
-        console.log(obj)
+        // console.log(obj)
         refs.modalRef.classList.remove("is-hidden")
+        
+        console.log(document.querySelector(".btn-add-watched"))
+
+        document.querySelector(".btn-add-watched").addEventListener("click", addMovie)
     })
-    console.dir(event.target.classList.value)
+    
+    function addMovie(e) {
+        e.preventDefault()
+
+        filmApiService.fetchMovieInfo().then(obj => {
+            myLibraryWatched.addMovie(obj)
+            localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
+    })
+    }
+    // console.dir(event.target.classList.value)
     refs.bodyRef.classList.add("modal-open")
     refs.modalRef.addEventListener("click", closeModal)
     window.addEventListener("keyup", closeModal)
@@ -122,4 +149,14 @@ function closeModal(event) {
         window.removeEventListener("keyup", closeModal)
     }
 }
-    
+function renderMyLibrary(e) {
+    e.preventDefault()
+    refs.btnWatchedRef.classList.remove('is-hidden')
+    refs.btnQueueRef.classList.remove('is-hidden')
+    refs.searchFormRef.classList.add('is-hidden')
+    console.log(myLibraryWatched.movies)
+    const localMovies = localStorage.getItem('moviesWatchedList')
+    myLibraryWatched.movies = JSON.parse(localMovies)
+    console.log(myLibraryWatched.movies)
+    createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
+    }

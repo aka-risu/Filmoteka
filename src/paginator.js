@@ -1,24 +1,26 @@
+import { template } from 'handlebars';
 import movieCard from './movieCard.hbs';
-export default function createPagination(items, currentPage, pages) {
+export default function createPagination(items, currentPage, pages = 0, template) {
 const list_element = document.getElementById('movies-list')
 const pagination_element = document.getElementById('pagination')
 
 let current_page = currentPage
-// let rows = 20
-    
-DisplayList(items, list_element)
+let rows = 20
+    let page_count = pages === 0 ? Math.ceil(items.length / rows) : pages    
+    // console.log(page_count)
+DisplayList(items, list_element, template)
 SetUpPagination(items, pagination_element, pages)
     
-function DisplayList(items, wrapper) {
+function DisplayList(items, wrapper, template) {
     wrapper.innerHTML = ""
-    wrapper.insertAdjacentHTML('beforeend', movieCard(items))
+    wrapper.insertAdjacentHTML('beforeend', template(items))
 
 }
     function SetUpPagination(items, wrapper, pages) {
     // console.log(pages)
     wrapper.innerHTML = ""
     // let page_count = Math.ceil(items.length / rows_per_page)
-    let page_count = pages
+    // let page_count = pages
     let pages_shown = 5
     let currentPage = parseInt(current_page)
     
