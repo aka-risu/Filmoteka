@@ -40,6 +40,7 @@ refs.myLibraryRef.addEventListener('click', renderMyLibrary);
 
 paginator.addEventListener('click', trendingSearch);
 refs.searchFormRef.addEventListener('submit', search);
+refs.searchFormRef.addEventListener('input', clearError);
 refs.movieListRef.addEventListener('click', handleClickOnMovie);
 
 refs.btnMyLibrary.addEventListener('click', renderMyLibraryList);
@@ -115,13 +116,32 @@ function searchMovies() {
     .fetchMovieByWord()
     .then(array => getGenres(array))
     .then(array => {
-      createPagination(
-        array,
-        filmApiService.page,
-        filmApiService.totalPages,
-        movieCard,
-      );
+      if (array.length === 0) {
+        showErrorMessage();
+        return;
+      }
+      if (array.length > 0) {
+        hideErrorMessage();
+        createPagination(
+          array,
+          filmApiService.page,
+          filmApiService.totalPages,
+          movieCard,
+        );
+      }
     });
+}
+
+function showErrorMessage() {
+  refs.errorMessageRef.classList.remove('is-hidden');
+}
+
+function hideErrorMessage() {
+  refs.errorMessageRef.classList.add('is-hidden');
+}
+
+function clearError(e) {
+  if (e.target.value === '') hideErrorMessage();
 }
 function search(e) {
   e.preventDefault();
