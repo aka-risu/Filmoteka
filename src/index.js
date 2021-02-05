@@ -55,7 +55,9 @@ function renderMainPage(e) {
   refs.searchFormRef.elements.query.value = '';
   refs.bodyRef.classList.remove('js-my-library-queue');
   refs.bodyRef.classList.remove('js-my-library-watched');
+  paginator.removeEventListener('click', searchFilms);
   renderTrendingMovies();
+  paginator.addEventListener('click', trendingSearch);
 }
 function createSearchForm() {
   const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit">Search</button>`;
@@ -77,6 +79,7 @@ function renderTrendingMovies() {
 }
 
 function trendingSearch(event) {
+  console.log(event.target);
   handleSearch(event, getTrendingMovies);
 }
 
@@ -143,6 +146,7 @@ function clearError(e) {
 }
 function search(e) {
   e.preventDefault();
+  if (e.currentTarget.elements.query.value === '') return;
   filmApiService.setPage(1);
 
   filmApiService.query = e.currentTarget.elements.query.value;
