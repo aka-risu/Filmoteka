@@ -8,15 +8,16 @@ let current_page = currentPage
 let rows = 20
     let page_count = pages === 0 ? Math.ceil(items.length / rows) : pages    
     // console.log(page_count)
-DisplayList(items, list_element, template)
-SetUpPagination(items, pagination_element, pages)
+    DisplayList(items, list_element, template)
+    // if (items.length === 0)
+SetUpPagination(items, pagination_element, page_count)
     
 function DisplayList(items, wrapper, template) {
     wrapper.innerHTML = ""
     wrapper.insertAdjacentHTML('beforeend', template(items))
 
 }
-    function SetUpPagination(items, wrapper, pages) {
+    function SetUpPagination(items, wrapper, page_count) {
     // console.log(pages)
     wrapper.innerHTML = ""
     // let page_count = Math.ceil(items.length / rows_per_page)

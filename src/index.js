@@ -1,244 +1,275 @@
 import './styles.css';
 import './fetchMovies';
-import myLibraryMovie from "./myLibraryMovie.hbs"
-import modalMovieCard from "./modalMovieCard.hbs";
+import myLibraryMovie from './myLibraryMovie.hbs';
+import modalMovieCard from './modalMovieCard.hbs';
 import FilmApiService from './fetchMovies';
 import getGenres from './getGenres';
-import createPagination from "./paginator";
+import createPagination from './paginator';
 import movieCard from './movieCard.hbs';
 
-import myLibrary from "./myLibrary";
-import "./modal.js";
-
+import myLibrary from './myLibrary';
+import './modal.js';
 
 const refs = {
-    movieListRef: document.querySelector(".movies-list"),
-    navigationRef: document.querySelector(".navigation"),
-    logoRef: document.querySelector(".navigation-logo"),
-    homeRef: document.querySelector(".navigation-home"),
-    myLibraryRef: document.querySelector(".navigation-my-library"),
-    searchFormRef: document.querySelector(".search-form"),
-    errorMessageRef: document.querySelector(".error-message"),
-    paginationRef: document.querySelector(".pagination"),
-    modalRef: document.querySelector(".js-modal"),
-    bodyRef: document.querySelector("body"),
-    btnWatchedRef: document.querySelector(".btn-watched"),
-    btnQueueRef: document.querySelector(".btn-queue"),
-    btnMyLibrary: document.querySelector(".my-library-buttons"),
-    btnAddWatched: document.querySelector(".btn-add-watched"),
-    btnAddQueue: document.querySelector(".btn-add-queue"),
-}
+  movieListRef: document.querySelector('.movies-list'),
+  navigationRef: document.querySelector('.navigation'),
+  logoRef: document.querySelector('.navigation-logo'),
+  homeRef: document.querySelector('.navigation-home'),
+  myLibraryRef: document.querySelector('.navigation-my-library'),
+  searchFormRef: document.querySelector('.search-form'),
+  errorMessageRef: document.querySelector('.error-message'),
+  paginationRef: document.querySelector('.pagination'),
+  modalRef: document.querySelector('.js-modal'),
+  bodyRef: document.querySelector('body'),
+  btnWatchedRef: document.querySelector('.btn-watched'),
+  btnQueueRef: document.querySelector('.btn-queue'),
+  btnMyLibrary: document.querySelector('.my-library-buttons'),
+  btnAddWatched: document.querySelector('.btn-add-watched'),
+  btnAddQueue: document.querySelector('.btn-add-queue'),
+};
 
+const filmApiService = new FilmApiService();
+const myLibraryWatched = new myLibrary();
+const myLibraryQueue = new myLibrary();
+const paginator = document.querySelector('.pagination');
+document.addEventListener('DOMContentLoaded', renderMainPage);
 
-const filmApiService = new FilmApiService;
-const myLibraryWatched = new myLibrary;
-const myLibraryQueue = new myLibrary;
-const paginator = document.querySelector(".pagination")
-document.addEventListener("DOMContentLoaded", renderMainPage)
+refs.homeRef.addEventListener('click', renderMainPage);
+refs.logoRef.addEventListener('click', renderMainPage);
+refs.myLibraryRef.addEventListener('click', renderMyLibrary);
 
-refs.homeRef.addEventListener('click', renderMainPage)
-refs.logoRef.addEventListener('click', renderMainPage)
-refs.myLibraryRef.addEventListener('click', renderMyLibrary)
+paginator.addEventListener('click', trendingSearch);
+refs.searchFormRef.addEventListener('submit', search);
+refs.movieListRef.addEventListener('click', handleClickOnMovie);
 
-paginator.addEventListener("click", trendingSearch)
-refs.searchFormRef.addEventListener("submit", search)
-refs.movieListRef.addEventListener("click", handleClickOnMovie)
-
-refs.btnMyLibrary.addEventListener('click', renderMyLibraryList)
+refs.btnMyLibrary.addEventListener('click', renderMyLibraryList);
 function renderMainPage(e) {
-    e.preventDefault()
-    filmApiService.setPage(1)
-    refs.searchFormRef.innerHTML = ""
-    
-    createSearchForm()
+  e.preventDefault();
+  filmApiService.setPage(1);
+  refs.searchFormRef.innerHTML = '';
 
-    refs.btnMyLibrary.innerHTML = ""
-    refs.searchFormRef.elements.query.value = ""
-    refs.bodyRef.classList.remove('js-my-library-queue')
-    refs.bodyRef.classList.remove('js-my-library-watched')
-    renderTrendingMovies()
+  createSearchForm();
+
+  refs.btnMyLibrary.innerHTML = '';
+  refs.searchFormRef.elements.query.value = '';
+  refs.bodyRef.classList.remove('js-my-library-queue');
+  refs.bodyRef.classList.remove('js-my-library-watched');
+  renderTrendingMovies();
 }
 function createSearchForm() {
-        const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit">Search</button>`
-        refs.searchFormRef.insertAdjacentHTML('beforeend', searchForm)
+  const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit">Search</button>`;
+  refs.searchFormRef.insertAdjacentHTML('beforeend', searchForm);
 }
-    
+
 function renderTrendingMovies() {
-    filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
-       createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
-    })
+  filmApiService
+    .fetchTrendingMovies()
+    .then(array => getGenres(array))
+    .then(array => {
+      createPagination(
+        array,
+        filmApiService.page,
+        filmApiService.totalPages,
+        movieCard,
+      );
+    });
 }
 
 function trendingSearch(event) {
-   handleSearch(event, getTrendingMovies)
+  handleSearch(event, getTrendingMovies);
 }
 
 function handleSearch(event, callback) {
-    if (event.target.nodeName !== "BUTTON") {
-       return
-    }
-        if (event.target.classList.value === 'left-button') {
-        if (filmApiService.page <= 1) return
-           filmApiService.setPage(filmApiService.page-1)
-        } else if (event.target.classList.value === 'right-button') {
-            if (filmApiService.page >= filmApiService.totalPages) return
-            filmApiService.setPage(parseInt(filmApiService.page)+1)
-        } else {
-            const page = event.target.dataset.index
-            filmApiService.setPage(page)
-        }
-     callback()
+  if (event.target.nodeName !== 'BUTTON') {
+    return;
+  }
+  if (event.target.classList.value === 'left-button') {
+    if (filmApiService.page <= 1) return;
+    filmApiService.setPage(filmApiService.page - 1);
+  } else if (event.target.classList.value === 'right-button') {
+    if (filmApiService.page >= filmApiService.totalPages) return;
+    filmApiService.setPage(parseInt(filmApiService.page) + 1);
+  } else {
+    const page = event.target.dataset.index;
+    filmApiService.setPage(page);
+  }
+  callback();
 }
-    
+
 function getTrendingMovies() {
-filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
-        createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
-        })    
+  filmApiService
+    .fetchTrendingMovies()
+    .then(array => getGenres(array))
+    .then(array => {
+      createPagination(
+        array,
+        filmApiService.page,
+        filmApiService.totalPages,
+        movieCard,
+      );
+    });
 }
 
 function searchMovies() {
-    filmApiService.fetchMovieByWord().then(array => getGenres(array)).then(array => {
-        createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
-    })
+  filmApiService
+    .fetchMovieByWord()
+    .then(array => getGenres(array))
+    .then(array => {
+      createPagination(
+        array,
+        filmApiService.page,
+        filmApiService.totalPages,
+        movieCard,
+      );
+    });
 }
 function search(e) {
+  e.preventDefault();
+  filmApiService.setPage(1);
 
-    e.preventDefault()
-    filmApiService.setPage(1)
-    
-    filmApiService.query = e.currentTarget.elements.query.value
-    
-    paginator.removeEventListener("click", trendingSearch)
-    paginator.removeEventListener("click", searchFilms)
-    paginator.addEventListener("click", searchFilms)
-    
-    searchMovies()
+  filmApiService.query = e.currentTarget.elements.query.value;
+
+  paginator.removeEventListener('click', trendingSearch);
+  paginator.removeEventListener('click', searchFilms);
+  paginator.addEventListener('click', searchFilms);
+
+  searchMovies();
 }
 function searchFilms(event) {
-    return  handleSearch(event, searchMovies)
+  return handleSearch(event, searchMovies);
 }
 function handleClickOnMovie(event) {
-    event.preventDefault()
+  event.preventDefault();
 
-    if (event.target.nodeName !== "A") return
+  if (event.target.nodeName !== 'A') return;
 
-    filmApiService.movieID = event.target.id
-    filmApiService.fetchMovieInfo().then(obj => {
-        refs.modalRef.innerHTML = ""
-        refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj))
-        refs.modalRef.classList.remove("is-hidden")
-        
-        if (myLibraryWatched.findMovie(obj.id)) {
-            const btnWatched = document.querySelector('.btn-add-watched')
-            btnWatched.textContent = "Remove from watched";
-            btnWatched.classList.remove('btn-add-watched')
-            btnWatched.classList.add('btn-remove-watched')
-        }
-        if (myLibraryQueue.findMovie(obj.id)) {
-            const btnWatched = document.querySelector('.btn-add-queue')
-            btnWatched.textContent = "Remove from queue";
-            btnWatched.classList.remove('btn-add-queue')
-            btnWatched.classList.add('btn-remove-queue')
-        }
-    })
+  filmApiService.movieID = event.target.id;
+  filmApiService.fetchMovieInfo().then(obj => {
+    refs.modalRef.innerHTML = '';
+    refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj));
+    refs.modalRef.classList.remove('is-hidden');
 
-    refs.bodyRef.classList.add("modal-open")
-    refs.modalRef.addEventListener('click', handleMyLibraryMovie)
-    refs.modalRef.addEventListener("click", closeModal)
-    window.addEventListener("keyup", closeModal)
+    if (myLibraryWatched.findMovie(obj.id)) {
+      const btnWatched = document.querySelector('.btn-add-watched');
+      btnWatched.textContent = 'Remove from watched';
+      btnWatched.classList.remove('btn-add-watched');
+      btnWatched.classList.add('btn-remove-watched');
+    }
+    if (myLibraryQueue.findMovie(obj.id)) {
+      const btnWatched = document.querySelector('.btn-add-queue');
+      btnWatched.textContent = 'Remove from queue';
+      btnWatched.classList.remove('btn-add-queue');
+      btnWatched.classList.add('btn-remove-queue');
+    }
+  });
+
+  refs.bodyRef.classList.add('modal-open');
+  refs.modalRef.addEventListener('click', handleMyLibraryMovie);
+  refs.modalRef.addEventListener('click', closeModal);
+  window.addEventListener('keyup', closeModal);
 }
 function handleMyLibraryMovie(event) {
-    if (event.target.dataset.action !== "add") return
-    
-    if (event.target.classList.value === "btn-remove-watched") {
-        console.log(filmApiService.movieID)
-        myLibraryWatched.deleteMovie(filmApiService.movieID)
+  if (event.target.dataset.action !== 'add') return;
 
-        localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
-        
-        event.target.textContent = "Add to watched";
-        event.target.classList.remove('btn-remove-watched')
-        event.target.classList.add('btn-add-watched')
-    } else if (event.target.classList.value === "btn-add-watched") {
-        filmApiService.fetchMovieInfo().then(obj => {
-            myLibraryWatched.addMovie(obj)
-            localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
+  if (event.target.classList.value === 'btn-remove-watched') {
+    console.log(filmApiService.movieID);
+    myLibraryWatched.deleteMovie(filmApiService.movieID);
 
-            event.target.textContent = "Remove from watched";
-            event.target.classList.remove('btn-add-watched')
-            event.target.classList.add('btn-remove-watched')
-        })
-    }
-    if (event.target.classList.value === "btn-remove-queue") {
-        console.log(filmApiService.movieID)
-        myLibraryQueue.deleteMovie(filmApiService.movieID)
+    localStorage.setItem(
+      'moviesWatchedList',
+      JSON.stringify(myLibraryWatched.movies),
+    );
 
-        localStorage.setItem('moviesQueueList', JSON.stringify(myLibraryQueue.movies))
-        
-        event.target.textContent = "Add to queue";
-        event.target.classList.remove('btn-remove-queue')
-        event.target.classList.add('btn-add-queue')
-    } else if (event.target.classList.value === "btn-add-queue") {
-        filmApiService.fetchMovieInfo().then(obj => {
-        myLibraryQueue.addMovie(obj)
-        localStorage.setItem('moviesQueueList', JSON.stringify(myLibraryQueue.movies))
+    event.target.textContent = 'Add to watched';
+    event.target.classList.remove('btn-remove-watched');
+    event.target.classList.add('btn-add-watched');
+  } else if (event.target.classList.value === 'btn-add-watched') {
+    filmApiService.fetchMovieInfo().then(obj => {
+      myLibraryWatched.addMovie(obj);
+      localStorage.setItem(
+        'moviesWatchedList',
+        JSON.stringify(myLibraryWatched.movies),
+      );
 
-        event.target.textContent = "Remove from queue";
-        event.target.classList.remove('btn-add-queue')
-        event.target.classList.add('btn-remove-queue')  
-        })
-    }
+      event.target.textContent = 'Remove from watched';
+      event.target.classList.remove('btn-add-watched');
+      event.target.classList.add('btn-remove-watched');
+    });
+  }
+  if (event.target.classList.value === 'btn-remove-queue') {
+    console.log(filmApiService.movieID);
+    myLibraryQueue.deleteMovie(filmApiService.movieID);
+
+    localStorage.setItem(
+      'moviesQueueList',
+      JSON.stringify(myLibraryQueue.movies),
+    );
+
+    event.target.textContent = 'Add to queue';
+    event.target.classList.remove('btn-remove-queue');
+    event.target.classList.add('btn-add-queue');
+  } else if (event.target.classList.value === 'btn-add-queue') {
+    filmApiService.fetchMovieInfo().then(obj => {
+      myLibraryQueue.addMovie(obj);
+      localStorage.setItem(
+        'moviesQueueList',
+        JSON.stringify(myLibraryQueue.movies),
+      );
+
+      event.target.textContent = 'Remove from queue';
+      event.target.classList.remove('btn-add-queue');
+      event.target.classList.add('btn-remove-queue');
+    });
+  }
 }
 
 function closeModal(event) {
-
-    if (event.target.classList.value === "overlay" || event.keyCode === 27) {
-       
-        refs.modalRef.classList.add("is-hidden")
-        refs.bodyRef.classList.remove("modal-open")
-        refs.modalRef.removeEventListener("click", closeModal)
-        window.removeEventListener("keyup", closeModal)
-        refs.modalRef.removeEventListener('click', handleMyLibraryMovie)
-        if (refs.bodyRef.classList.value === "js-my-library-watched") {
-            renderWatchedList()
-        }
-       // refs.bodyRef.classList.add('js-my-library')
+  if (event.target.classList.value === 'overlay' || event.keyCode === 27) {
+    refs.modalRef.classList.add('is-hidden');
+    refs.bodyRef.classList.remove('modal-open');
+    refs.modalRef.removeEventListener('click', closeModal);
+    window.removeEventListener('keyup', closeModal);
+    refs.modalRef.removeEventListener('click', handleMyLibraryMovie);
+    if (refs.bodyRef.classList.value === 'js-my-library-watched') {
+      renderWatchedList();
     }
+    // refs.bodyRef.classList.add('js-my-library')
+  }
 }
 function renderMyLibrary(e) {
-    e.preventDefault()
-    
-    refs.searchFormRef.innerHTML = ""
-    refs.btnMyLibrary.innerHTML = ""
-    
-    createMyLibraryButtons()
-    renderWatchedList()
+  e.preventDefault();
 
-    refs.bodyRef.classList.add('js-my-library-watched')
+  refs.searchFormRef.innerHTML = '';
+  refs.btnMyLibrary.innerHTML = '';
+
+  createMyLibraryButtons();
+  renderWatchedList();
+
+  refs.bodyRef.classList.add('js-my-library-watched');
 }
 function createMyLibraryButtons() {
-    const buttons = `<button class="btn-watched">Watched</button><button class="btn-queue">Queue</button>`
-    refs.btnMyLibrary.insertAdjacentHTML('beforeend', buttons)
+  const buttons = `<button class="btn-watched">Watched</button><button class="btn-queue">Queue</button>`;
+  refs.btnMyLibrary.insertAdjacentHTML('beforeend', buttons);
 }
 function renderMyLibraryList(e) {
-    if (e.target.classList.value === "btn-watched") {
-        renderWatchedList()
-    }
-    if (e.target.classList.value === "btn-queue") {
-        renderQueueList()
-    }
+  if (e.target.classList.value === 'btn-watched') {
+    renderWatchedList();
+  }
+  if (e.target.classList.value === 'btn-queue') {
+    renderQueueList();
+  }
 }
 function renderWatchedList() {
-    refs.bodyRef.classList.add('js-my-library-watched')
-    refs.bodyRef.classList.remove('js-my-library-queue')
-     const localMovies = localStorage.getItem('moviesWatchedList')
-     myLibraryWatched.movies = JSON.parse(localMovies)
-     createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
+  refs.bodyRef.classList.add('js-my-library-watched');
+  refs.bodyRef.classList.remove('js-my-library-queue');
+  const localMovies = localStorage.getItem('moviesWatchedList');
+  myLibraryWatched.movies = JSON.parse(localMovies);
+  createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
 }
 function renderQueueList() {
-    refs.bodyRef.classList.add('js-my-library-queue')
-    refs.bodyRef.classList.remove('js-my-library-watched')
-    const localMovies = localStorage.getItem('moviesQueueList')
-    myLibraryQueue.movies = JSON.parse(localMovies)
-    createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie)
+  refs.bodyRef.classList.add('js-my-library-queue');
+  refs.bodyRef.classList.remove('js-my-library-watched');
+  const localMovies = localStorage.getItem('moviesQueueList');
+  myLibraryQueue.movies = JSON.parse(localMovies);
+  createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie);
 }
