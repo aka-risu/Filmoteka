@@ -34,8 +34,8 @@ const filmApiService = new FilmApiService;
 const myLibraryWatched = new myLibrary;
 const myLibraryQueue = new myLibrary;
 const paginator = document.querySelector(".pagination")
-renderTrendingMovies()
-// refs.navigationRef.addEventListener('click', renderMainPage)
+document.addEventListener("DOMContentLoaded", renderMainPage)
+
 refs.homeRef.addEventListener('click', renderMainPage)
 refs.logoRef.addEventListener('click', renderMainPage)
 refs.myLibraryRef.addEventListener('click', renderMyLibrary)
@@ -47,42 +47,35 @@ refs.movieListRef.addEventListener("click", handleClickOnMovie)
 refs.btnMyLibrary.addEventListener('click', renderMyLibraryList)
 function renderMainPage(e) {
     e.preventDefault()
-    console.log(e.target)
-    // if (e.target.classList.value !== "navigation-logo" || e.target.classList.value !=="navgation-home") return
-    
-    
     filmApiService.setPage(1)
-    // refs.btnWatchedRef.classList.add('is-hidden')
-    // refs.btnQueueRef.classList.add('is-hidden')
     refs.searchFormRef.innerHTML = ""
-    const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit">Search</button>`
-    refs.searchFormRef.insertAdjacentHTML('beforeend', searchForm)
+    
+    createSearchForm()
+
     refs.btnMyLibrary.innerHTML = ""
     refs.searchFormRef.elements.query.value = ""
-    // refs.searchFormRef.classList.remove('is-hidden')
+    refs.bodyRef.classList.remove('js-my-library-queue')
+    refs.bodyRef.classList.remove('js-my-library-watched')
     renderTrendingMovies()
 }
+function createSearchForm() {
+        const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit">Search</button>`
+        refs.searchFormRef.insertAdjacentHTML('beforeend', searchForm)
+}
+    
 function renderTrendingMovies() {
     filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array => {
        createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
     })
 }
 
-
-
-
 function trendingSearch(event) {
-    // filmApiService.setPage(1)
-  handleSearch(event, getTrendingMovies)
+   handleSearch(event, getTrendingMovies)
 }
+
 function handleSearch(event, callback) {
-        // console.log(filmApiService.page)
-        // console.dir(event.target.classList.value)
-    // paginator.removeEventListener("click", searchFilms)
-    
     if (event.target.nodeName !== "BUTTON") {
-        // console.log(":(")
-        return
+       return
     }
         if (event.target.classList.value === 'left-button') {
         if (filmApiService.page <= 1) return
@@ -92,10 +85,8 @@ function handleSearch(event, callback) {
             filmApiService.setPage(parseInt(filmApiService.page)+1)
         } else {
             const page = event.target.dataset.index
-            // console.log(page)
-        filmApiService.setPage(page)
+            filmApiService.setPage(page)
         }
-                // console.log(filmApiService.page)
      callback()
 }
     
@@ -106,9 +97,9 @@ filmApiService.fetchTrendingMovies().then(array => getGenres(array)).then(array 
 }
 
 function searchMovies() {
-filmApiService.fetchMovieByWord().then(array => getGenres(array)).then(array => {
+    filmApiService.fetchMovieByWord().then(array => getGenres(array)).then(array => {
         createPagination(array, filmApiService.page, filmApiService.totalPages, movieCard)
-        })
+    })
 }
 function search(e) {
 
@@ -116,24 +107,21 @@ function search(e) {
     filmApiService.setPage(1)
     
     filmApiService.query = e.currentTarget.elements.query.value
-    // paginator.removeEventListener("click", event => handleSearch(event, getTrendingMovies()))
+    
     paginator.removeEventListener("click", trendingSearch)
     paginator.removeEventListener("click", searchFilms)
     paginator.addEventListener("click", searchFilms)
     
-    // console.log(filmApiService.query)
     searchMovies()
-    
 }
 function searchFilms(event) {
     return  handleSearch(event, searchMovies)
 }
 function handleClickOnMovie(event) {
     event.preventDefault()
-    // console.log(event.target)
+
     if (event.target.nodeName !== "A") return
 
-    // console.log(event.target.id)
     filmApiService.movieID = event.target.id
     filmApiService.fetchMovieInfo().then(obj => {
         refs.modalRef.innerHTML = ""
@@ -211,37 +199,46 @@ function closeModal(event) {
         refs.modalRef.removeEventListener("click", closeModal)
         window.removeEventListener("keyup", closeModal)
         refs.modalRef.removeEventListener('click', handleMyLibraryMovie)
-
-        const localMovies = localStorage.getItem('moviesWatchedList')
-        myLibraryWatched.movies = JSON.parse(localMovies)
-        
-        createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
+        if (refs.bodyRef.classList.value === "js-my-library-watched") {
+            renderWatchedList()
+        }
+       // refs.bodyRef.classList.add('js-my-library')
     }
 }
 function renderMyLibrary(e) {
     e.preventDefault()
-    console.log(e.target.classList.value)
+    
     refs.searchFormRef.innerHTML = ""
     refs.btnMyLibrary.innerHTML = ""
+    
+    createMyLibraryButtons()
+    renderWatchedList()
+
+    refs.bodyRef.classList.add('js-my-library-watched')
+}
+function createMyLibraryButtons() {
     const buttons = `<button class="btn-watched">Watched</button><button class="btn-queue">Queue</button>`
     refs.btnMyLibrary.insertAdjacentHTML('beforeend', buttons)
-    
-    const localMovies = localStorage.getItem('moviesWatchedList')
-    myLibraryWatched.movies = JSON.parse(localMovies)
-    createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
 }
 function renderMyLibraryList(e) {
     if (e.target.classList.value === "btn-watched") {
-        const localMovies = localStorage.getItem('moviesWatchedList')
-        myLibraryWatched.movies = JSON.parse(localMovies)
-        console.log(myLibraryWatched.movies)
-        createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
+        renderWatchedList()
     }
     if (e.target.classList.value === "btn-queue") {
-        const localMovies = localStorage.getItem('moviesQueueList')
-        myLibraryQueue.movies = JSON.parse(localMovies)
-        console.log(myLibraryQueue.movies)
-        createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie)
+        renderQueueList()
     }
-    
+}
+function renderWatchedList() {
+    refs.bodyRef.classList.add('js-my-library-watched')
+    refs.bodyRef.classList.remove('js-my-library-queue')
+     const localMovies = localStorage.getItem('moviesWatchedList')
+     myLibraryWatched.movies = JSON.parse(localMovies)
+     createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
+}
+function renderQueueList() {
+    refs.bodyRef.classList.add('js-my-library-queue')
+    refs.bodyRef.classList.remove('js-my-library-watched')
+    const localMovies = localStorage.getItem('moviesQueueList')
+    myLibraryQueue.movies = JSON.parse(localMovies)
+    createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie)
 }
