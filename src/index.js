@@ -48,7 +48,7 @@ function renderMainPage(e) {
   e.preventDefault();
   filmApiService.setPage(1);
   refs.searchFormRef.innerHTML = '';
-
+  hideErrorMessage();
   createSearchForm();
 
   refs.btnMyLibrary.innerHTML = '';
@@ -120,15 +120,13 @@ function searchMovies() {
         showErrorMessage();
         return;
       }
-      if (array.length > 0) {
-        hideErrorMessage();
-        createPagination(
-          array,
-          filmApiService.page,
-          filmApiService.totalPages,
-          movieCard,
-        );
-      }
+      hideErrorMessage();
+      createPagination(
+        array,
+        filmApiService.page,
+        filmApiService.totalPages,
+        movieCard,
+      );
     });
 }
 
@@ -258,7 +256,7 @@ function closeModal(event) {
 }
 function renderMyLibrary(e) {
   e.preventDefault();
-
+  hideErrorMessage();
   refs.searchFormRef.innerHTML = '';
   refs.btnMyLibrary.innerHTML = '';
 
