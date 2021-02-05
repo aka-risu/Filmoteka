@@ -49,6 +49,7 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px;
 }
 .navigation-menu {
   display: flex;
@@ -222,6 +223,7 @@ ul {
   width: 100%;
 }
 .is-hidden {
+  display: none;
   opacity: 0;
   pointer-events: none;
 }
