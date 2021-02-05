@@ -40,6 +40,7 @@ refs.myLibraryRef.addEventListener('click', renderMyLibrary);
 
 paginator.addEventListener('click', trendingSearch);
 refs.searchFormRef.addEventListener('submit', search);
+refs.searchFormRef.addEventListener('input', clearError);
 refs.movieListRef.addEventListener('click', handleClickOnMovie);
 
 refs.btnMyLibrary.addEventListener('click', renderMyLibraryList);
@@ -142,6 +143,10 @@ function showErrorMessage() {
 
 function hideErrorMessage() {
   refs.errorMessageRef.classList.add('is-hidden');
+}
+
+function clearError(e) {
+  if (e.target.value === '') hideErrorMessage();
 }
 
 function search(e) {
