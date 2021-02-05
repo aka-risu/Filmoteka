@@ -138,113 +138,83 @@ function handleClickOnMovie(event) {
     filmApiService.fetchMovieInfo().then(obj => {
         refs.modalRef.innerHTML = ""
         refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj))
-        // console.log(obj)
         refs.modalRef.classList.remove("is-hidden")
+        
         if (myLibraryWatched.findMovie(obj.id)) {
-            const btnWatched = document.querySelector('[data-action="add"]')
-            btnWatched.textContent = "Remove";
+            const btnWatched = document.querySelector('.btn-add-watched')
+            btnWatched.textContent = "Remove from watched";
             btnWatched.classList.remove('btn-add-watched')
             btnWatched.classList.add('btn-remove-watched')
-        //     btnWatched.addEventListener('click', event => {
-        //          if (event.target.classList.value === "btn-remove-watched") { 
-        // console.log(filmApiService.movieID)
-        // myLibraryWatched.deleteMovie(filmApiService.movieID)
-        //          }
-                
-                // myLibraryWatched.deleteMovie(obj.id)
-                // localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
-        //     btnWatched.textContent = "Add to watched"
-        // })
-           
         }
-        // const btnWatched = document.querySelector('[data-action="add"]')
-    
-        
+        if (myLibraryQueue.findMovie(obj.id)) {
+            const btnWatched = document.querySelector('.btn-add-queue')
+            btnWatched.textContent = "Remove from queue";
+            btnWatched.classList.remove('btn-add-queue')
+            btnWatched.classList.add('btn-remove-queue')
+        }
     })
-    
-    // btnWatched.addEventListener('click', addMovie)
-    // refs.modalRef.addEventListener('click', deleteMovie)
-    // console.dir(event.target.classList.value)
+
     refs.bodyRef.classList.add("modal-open")
-    refs.modalRef.addEventListener('click', deleteMovie)
-    // refs.modalRef.addEventListener('click', addMovie)
+    refs.modalRef.addEventListener('click', handleMyLibraryMovie)
     refs.modalRef.addEventListener("click", closeModal)
     window.addEventListener("keyup", closeModal)
 }
-function deleteMovie(event) {
+function handleMyLibraryMovie(event) {
     if (event.target.dataset.action !== "add") return
-    // console.log(event.target.classList)
+    
     if (event.target.classList.value === "btn-remove-watched") {
-            console.log(filmApiService.movieID)
-            myLibraryWatched.deleteMovie(filmApiService.movieID)
+        console.log(filmApiService.movieID)
+        myLibraryWatched.deleteMovie(filmApiService.movieID)
 
-            localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
-        // console.log(event.target.textContent)
-        const btnWatched = document.querySelector('.btn-remove-watched')
-            btnWatched.textContent = "Add to watched";
-        // event.target.textContent = "Add to watched"
-        // console.log(btnWatched.textContent)
-         btnWatched.classList.remove('btn-remove-watched')
-           btnWatched.classList.add('btn-add-watched')
+        localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
+        
+        event.target.textContent = "Add to watched";
+        event.target.classList.remove('btn-remove-watched')
+        event.target.classList.add('btn-add-watched')
     } else if (event.target.classList.value === "btn-add-watched") {
         filmApiService.fetchMovieInfo().then(obj => {
             myLibraryWatched.addMovie(obj)
             localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
-            const btnWatched = document.querySelector('.btn-add-watched')
-            btnWatched.textContent = "Remove";
-            btnWatched.classList.remove('btn-add-watched')
-            btnWatched.classList.add('btn-remove-watched')
-            // console.log("jhjkk")
+
+            event.target.textContent = "Remove from watched";
+            event.target.classList.remove('btn-add-watched')
+            event.target.classList.add('btn-remove-watched')
         })
     }
-        //  const btnWatched = document.querySelector('.btn-add-watched')
-        //     btnWatched.textContent = "Remove";
-            // btnWatched.classList.remove('btn-add-watched')
-        //     btnWatched.classList.add('btn-remove-watched')
-    
-}
-function addMovie(event) {
-    if (event.target.classList.value === "btn-add-watched") { 
-    filmApiService.fetchMovieInfo().then(obj => {
-        myLibraryWatched.addMovie(obj)
-        localStorage.setItem('moviesWatchedList', JSON.stringify(myLibraryWatched.movies))
-         const btnWatched = document.querySelector('.btn-add-watched')
-            btnWatched.textContent = "Remove";
-            btnWatched.classList.remove('btn-add-watched')
-        btnWatched.classList.add('btn-remove-watched')
-        console.log("jhjkk")
-    })
-        //  const btnWatched = document.querySelector('.btn-add-watched')
-        //     btnWatched.textContent = "Remove";
-            // btnWatched.classList.remove('btn-add-watched')
-        //     btnWatched.classList.add('btn-remove-watched')
-    }
-    if (event.target.classList.value === "btn-add-queue") { 
+    if (event.target.classList.value === "btn-remove-queue") {
+        console.log(filmApiService.movieID)
+        myLibraryQueue.deleteMovie(filmApiService.movieID)
+
+        localStorage.setItem('moviesQueueList', JSON.stringify(myLibraryQueue.movies))
         
-    filmApiService.fetchMovieInfo().then(obj => {
+        event.target.textContent = "Add to queue";
+        event.target.classList.remove('btn-remove-queue')
+        event.target.classList.add('btn-add-queue')
+    } else if (event.target.classList.value === "btn-add-queue") {
+        filmApiService.fetchMovieInfo().then(obj => {
         myLibraryQueue.addMovie(obj)
         localStorage.setItem('moviesQueueList', JSON.stringify(myLibraryQueue.movies))
-    })
+
+        event.target.textContent = "Remove from queue";
+        event.target.classList.remove('btn-add-queue')
+        event.target.classList.add('btn-remove-queue')  
+        })
     }
-    // if (event.target.classList.value === "btn-remove-watched") { 
-    //     console.log(event.currentTarget)
-    //     myLibraryWatched.deleteMovie(event.target.id)
-    // }
 }
+
 function closeModal(event) {
 
     if (event.target.classList.value === "overlay" || event.keyCode === 27) {
-        //  if (event.keyCode !== 27) return
+       
         refs.modalRef.classList.add("is-hidden")
         refs.bodyRef.classList.remove("modal-open")
         refs.modalRef.removeEventListener("click", closeModal)
         window.removeEventListener("keyup", closeModal)
-        refs.modalRef.removeEventListener('click', addMovie)
-      refs.modalRef.removeEventListener('click', deleteMovie)
+        refs.modalRef.removeEventListener('click', handleMyLibraryMovie)
 
         const localMovies = localStorage.getItem('moviesWatchedList')
         myLibraryWatched.movies = JSON.parse(localMovies)
-        // console.log(myLibraryWatched.movies)
+        
         createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
     }
 }
@@ -255,13 +225,10 @@ function renderMyLibrary(e) {
     refs.btnMyLibrary.innerHTML = ""
     const buttons = `<button class="btn-watched">Watched</button><button class="btn-queue">Queue</button>`
     refs.btnMyLibrary.insertAdjacentHTML('beforeend', buttons)
-    // refs.btnWatchedRef.classList.remove('is-hidden')
-    // refs.btnQueueRef.classList.remove('is-hidden')
-    // refs.searchFormRef.classList.add('is-hidden')
-     const localMovies = localStorage.getItem('moviesWatchedList')
-        myLibraryWatched.movies = JSON.parse(localMovies)
-        console.log(myLibraryWatched.movies)
-        createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
+    
+    const localMovies = localStorage.getItem('moviesWatchedList')
+    myLibraryWatched.movies = JSON.parse(localMovies)
+    createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie)
 }
 function renderMyLibraryList(e) {
     if (e.target.classList.value === "btn-watched") {
