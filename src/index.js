@@ -39,16 +39,20 @@ const paginationOptions = {
   template: movieCard,
   container: '.movies-list',
   paginationContainer: '.pagination',
+  fullArray: true,
 };
 const paginationLibraryOptions = {
   currentPage: 1,
   template: myLibraryMovie,
   container: '.movies-list',
   paginationContainer: '.pagination',
+  rows: 3,
 };
 // createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
 const pagination = new Pagination(paginationOptions);
+const paginationLibrary = new Pagination(paginationLibraryOptions);
 const paginator = document.querySelector('.pagination');
+
 document.addEventListener('DOMContentLoaded', renderMainPage);
 
 refs.homeRef.addEventListener('click', renderMainPage);
@@ -89,19 +93,11 @@ function renderTrendingMovies() {
     .then(array => {
       pagination.currentPage = filmApiService.page;
       pagination.create(array);
-      //   new Pagination(array, paginationOptions);
-      //   createPagination(
-      //     array,
-      //     filmApiService.page,
-      //     filmApiService.totalPages,
-      //     movieCard,
-      //   );
     });
 }
 
 function trendingSearch(event) {
-  console.log(event.target);
-  handleSearch(event, getTrendingMovies);
+  handleSearch(event, renderTrendingMovies);
 }
 
 function handleSearch(event, callback) {
@@ -126,33 +122,6 @@ function handleSearch(event, callback) {
   }
   console.log(filmApiService.page);
   callback();
-}
-
-function getTrendingMovies() {
-  filmApiService
-    .fetchTrendingMovies()
-    .then(array => getGenres(array))
-    .then(array => {
-      pagination.currentPage = filmApiService.page;
-      pagination.create(array);
-
-      console.log('1222');
-      //   const pagination = new Pagination(array, {
-      //     // items: array,
-      //     currentPage: filmApiService.page,
-      //     pages: filmApiService.totalPages,
-      //     template: movieCard,
-      //     container: '.movies-list',
-      //     paginationContainer: '.pagination',
-      //   });
-
-      //     createPagination(
-      //     array,
-      //     filmApiService.page,
-      //     filmApiService.totalPages,
-      //     movieCard,
-      //   );
-    });
 }
 
 function searchMovies() {
@@ -202,8 +171,11 @@ function search(e) {
 
   searchMovies();
 }
+function showLibraryFilmPagination(event) {
+  handleSearch(event, renderWatchedList);
+}
 function searchFilms(event) {
-  return handleSearch(event, searchMovies);
+  handleSearch(event, searchMovies);
 }
 function handleClickOnMovie(event) {
   event.preventDefault();
@@ -311,7 +283,7 @@ function renderMyLibrary(e) {
 
   createMyLibraryButtons();
   renderWatchedList();
-
+  paginator.addEventListener('click', showLibraryFilmPagination);
   refs.bodyRef.classList.add('js-my-library-watched');
 }
 function createMyLibraryButtons() {
@@ -331,7 +303,11 @@ function renderWatchedList() {
   refs.bodyRef.classList.remove('js-my-library-queue');
   const localMovies = localStorage.getItem('moviesWatchedList');
   myLibraryWatched.movies = JSON.parse(localMovies);
-  new Pagination(myLibraryWatched.movies, paginationLibraryOptions);
+  paginationLibrary.currentPage = 1;
+  paginationLibrary.create(myLibraryWatched.movies);
+  console.log(paginationLibrary.pages);
+
+  //   new Pagination(myLibraryWatched.movies, paginationLibraryOptions);
   //   createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
 }
 function renderQueueList() {
@@ -339,6 +315,6 @@ function renderQueueList() {
   refs.bodyRef.classList.remove('js-my-library-watched');
   const localMovies = localStorage.getItem('moviesQueueList');
   myLibraryQueue.movies = JSON.parse(localMovies);
-  new Pagination(myLibraryWatched.movies, paginationLibraryOptions);
+  paginationLibrary.create(myLibraryQueue.movies);
   //   createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie);
 }

@@ -10,15 +10,23 @@ export default class Pagination {
       container,
       paginationContainer,
       pagesShown,
+      fullArray,
     },
   ) {
     // this.items = [];
     this.currentPage = parseInt(currentPage);
-    this.pages = pages ? parseInt(pages) : Math.ceil(this.items.length / rows);
-    this.template = template;
     this.rows = rows ? rows : 20;
+    if (!pages) {
+      this.pages = 0;
+    } else
+      this.pages = pages
+        ? parseInt(pages)
+        : Math.ceil(this.items.length / rows);
+    this.template = template;
+
     this.refs = this.findRefs(container, paginationContainer);
     this.pagesShown = pagesShown ? pagesShown : 5;
+    this.fullArray = fullArray ? fullArray : false;
   }
   findRefs = (container, paginationContainer) => {
     return {
@@ -28,13 +36,23 @@ export default class Pagination {
   };
   create(items) {
     this.items = items;
-    this.displayList(this.items, this.refs.containerRef, this.template);
+    this.pages = this.pages
+      ? parseInt(this.pages)
+      : Math.ceil(this.items.length / this.rows);
     this.setUpPagination(
       this.items,
       this.refs.paginationContainerRef,
       this.pages,
       this.currentPage,
       this.pagesShown,
+    );
+    this.displayList(
+      this.items,
+      this.refs.containerRef,
+      this.template,
+      this.pages,
+      this.currentPage,
+      this.rows,
     );
   }
   currentPage(currentPage) {
@@ -51,9 +69,19 @@ export default class Pagination {
   // if (items.length === 0)
   //   SetUpPagination(items, paginationContainer, page_count);
 
-  displayList(items, wrapper, template) {
+  displayList(items, wrapper, template, pages, currentPage, rows) {
     wrapper.innerHTML = '';
-    wrapper.insertAdjacentHTML('beforeend', template(items));
+
+    //   const moviesShown = template(items)
+
+    //   for (i = 0; i < pages; i++) {
+
+    const pageItems = this.fullArray
+      ? this.items
+      : items.slice((currentPage - 1) * rows, currentPage * rows);
+    //   }
+    const moviesShown = template(pageItems);
+    wrapper.insertAdjacentHTML('beforeend', moviesShown);
   }
   setUpPagination(items, wrapper, pages, currentPage, pagesShown) {
     // console.log(parseInt(currentPage));
