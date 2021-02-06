@@ -1,0 +1,49 @@
+.footer {
+  background-color: #f7f7f7;
+}
+
+.footer-rights {
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #545454;
+  margin-bottom: 9px;
+
+  margin-top: 0;
+}
+.footer-dev {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #545454;
+  margin: 0;
+}
+
+.footer-students {
+  position: relative;
+}
+
+.footer-students::before {
+  display: inline-block;
+  content: '';
+  background-image: url('./images/heart.svg');
+  height: 12.75px;
+  width: 14px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.footer-students::after {
+  position: absolute;
+  display: block;
+  content: '';
+  background-color: #545454;
+  height: 1px;
+  width: 71%;
+  right: 0;
+  bottom: 0;
+}
