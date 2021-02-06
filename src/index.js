@@ -10,6 +10,7 @@ import movieCard from './templates/movieCard.hbs';
 
 import myLibrary from './js/myLibrary';
 import './js/modal.js';
+import './js/footer_modal';
 
 const refs = {
   movieListRef: document.querySelector('.movies-list'),

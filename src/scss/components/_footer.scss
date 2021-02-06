@@ -1,9 +1,11 @@
 .footer {
-  background-color: #f7f7f7;
+  padding-top: 29px;
+  padding-bottom: 29px;
+  background-color: $footer-background-color;
 }
 
 .footer-rights {
-  font-family: Roboto;
+  font-family: $main-font;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
@@ -13,18 +15,19 @@
   margin-top: 0;
 }
 .footer-dev {
-  font-family: Roboto;
+  font-family: $main-font;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-  color: #545454;
+  color: $footer-text-color;
   margin: 0;
 }
 
 .footer-students {
   position: relative;
+  cursor: pointer;
 }
 
 .footer-students::before {
@@ -41,9 +44,25 @@
   position: absolute;
   display: block;
   content: '';
-  background-color: #545454;
+  background-color: $footer-text-color;
   height: 1px;
   width: 71%;
   right: 0;
   bottom: 0;
+}
+
+@media screen and (min-width: 320px) {
+}
+@media screen and (min-width: 768px) {
+  .footer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-rights {
+    margin-bottom: 0;
+  }
+}
+@media screen and (min-width: 1024px) {
 }
