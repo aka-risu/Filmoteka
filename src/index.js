@@ -1,3 +1,4 @@
+import 'normalize.css';
 import './styles.scss';
 import './js/fetchMovies';
 import myLibraryMovie from './templates/myLibraryMovie.hbs';
