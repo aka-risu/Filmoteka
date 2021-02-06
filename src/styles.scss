@@ -1,31 +1,11 @@
-html {
-  box-sizing: border-box;
-}
+@import './scss/base/variables';
+@import './scss/base/reset';
+@import './scss/components/container';
+@import './scss/components/header';
+@import './scss/components/pagination';
+@import './scss/components/modal';
+@import './scss/components/footer.scss';
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-
-  /*
-   * CSS image reference example.
-   */
-}
-h2 {
-  margin: 0;
-  padding: 0;
-}
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 .movies-list {
   padding: 0;
   margin: 0;
@@ -36,6 +16,8 @@ ul {
   justify-content: space-between;
   list-style: none;
 }
+//   header start
+
 .wrapper-header {
   margin: 0;
   display: flex;
@@ -81,6 +63,7 @@ ul {
     padding-left: 20px;
     padding-right: 20px;
   }
+
   .wrapper {
     margin: 0;
     margin-right: auto;
@@ -146,6 +129,7 @@ ul {
 .list .item:hover {
   background-color: #fff;
 }
+
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -174,6 +158,7 @@ ul {
 .pagination button.active {
   background-color: rgb(21, 100, 34);
 }
+
 .movie-card,
 .movie-img,
 .movie-title,
@@ -230,5 +215,3 @@ ul {
 .modal-open {
   overflow: hidden;
 }
-
-@import './scss/footer.scss';
