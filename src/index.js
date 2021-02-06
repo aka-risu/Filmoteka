@@ -4,7 +4,7 @@ import myLibraryMovie from './myLibraryMovie.hbs';
 import modalMovieCard from './modalMovieCard.hbs';
 import FilmApiService from './fetchMovies';
 import getGenres from './getGenres';
-import createPagination from './paginator';
+import Pagination from './paginator';
 import movieCard from './movieCard.hbs';
 
 import myLibrary from './myLibrary';
@@ -31,6 +31,23 @@ const refs = {
 const filmApiService = new FilmApiService();
 const myLibraryWatched = new myLibrary();
 const myLibraryQueue = new myLibrary();
+
+const paginationOptions = {
+  // items: array,
+  currentPage: filmApiService.page,
+  pages: filmApiService.totalPages,
+  template: movieCard,
+  container: '.movies-list',
+  paginationContainer: '.pagination',
+};
+const paginationLibraryOptions = {
+  currentPage: 1,
+  template: myLibraryMovie,
+  container: '.movies-list',
+  paginationContainer: '.pagination',
+};
+// createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
+const pagination = new Pagination(paginationOptions);
 const paginator = document.querySelector('.pagination');
 document.addEventListener('DOMContentLoaded', renderMainPage);
 
@@ -47,6 +64,7 @@ refs.btnMyLibrary.addEventListener('click', renderMyLibraryList);
 function renderMainPage(e) {
   e.preventDefault();
   filmApiService.setPage(1);
+
   refs.searchFormRef.innerHTML = '';
   hideErrorMessage();
   createSearchForm();
@@ -69,12 +87,15 @@ function renderTrendingMovies() {
     .fetchTrendingMovies()
     .then(array => getGenres(array))
     .then(array => {
-      createPagination(
-        array,
-        filmApiService.page,
-        filmApiService.totalPages,
-        movieCard,
-      );
+      pagination.currentPage = filmApiService.page;
+      pagination.create(array);
+      //   new Pagination(array, paginationOptions);
+      //   createPagination(
+      //     array,
+      //     filmApiService.page,
+      //     filmApiService.totalPages,
+      //     movieCard,
+      //   );
     });
 }
 
@@ -88,15 +109,22 @@ function handleSearch(event, callback) {
     return;
   }
   if (event.target.classList.value === 'left-button') {
-    if (filmApiService.page <= 1) return;
+    if (filmApiService.page <= 1) {
+      event.target.disabled = true;
+      return;
+    }
     filmApiService.setPage(filmApiService.page - 1);
   } else if (event.target.classList.value === 'right-button') {
-    if (filmApiService.page >= filmApiService.totalPages) return;
+    if (filmApiService.page >= filmApiService.totalPages) {
+      event.target.disabled = true;
+      return;
+    }
     filmApiService.setPage(parseInt(filmApiService.page) + 1);
   } else {
     const page = event.target.dataset.index;
     filmApiService.setPage(page);
   }
+  console.log(filmApiService.page);
   callback();
 }
 
@@ -105,12 +133,25 @@ function getTrendingMovies() {
     .fetchTrendingMovies()
     .then(array => getGenres(array))
     .then(array => {
-      createPagination(
-        array,
-        filmApiService.page,
-        filmApiService.totalPages,
-        movieCard,
-      );
+      pagination.currentPage = filmApiService.page;
+      pagination.create(array);
+
+      console.log('1222');
+      //   const pagination = new Pagination(array, {
+      //     // items: array,
+      //     currentPage: filmApiService.page,
+      //     pages: filmApiService.totalPages,
+      //     template: movieCard,
+      //     container: '.movies-list',
+      //     paginationContainer: '.pagination',
+      //   });
+
+      //     createPagination(
+      //     array,
+      //     filmApiService.page,
+      //     filmApiService.totalPages,
+      //     movieCard,
+      //   );
     });
 }
 
@@ -124,12 +165,16 @@ function searchMovies() {
         return;
       }
       hideErrorMessage();
-      createPagination(
-        array,
-        filmApiService.page,
-        filmApiService.totalPages,
-        movieCard,
-      );
+      pagination.currentPage = filmApiService.page;
+      pagination.pages = filmApiService.totalPages;
+      pagination.create(array);
+      //   new Pagination(array, paginationOptions);
+      //   createPagination(
+      //     array,
+      //     filmApiService.page,
+      //     filmApiService.totalPages,
+      //     movieCard,
+      //   );
     });
 }
 
@@ -286,12 +331,14 @@ function renderWatchedList() {
   refs.bodyRef.classList.remove('js-my-library-queue');
   const localMovies = localStorage.getItem('moviesWatchedList');
   myLibraryWatched.movies = JSON.parse(localMovies);
-  createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
+  new Pagination(myLibraryWatched.movies, paginationLibraryOptions);
+  //   createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
 }
 function renderQueueList() {
   refs.bodyRef.classList.add('js-my-library-queue');
   refs.bodyRef.classList.remove('js-my-library-watched');
   const localMovies = localStorage.getItem('moviesQueueList');
   myLibraryQueue.movies = JSON.parse(localMovies);
-  createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie);
+  new Pagination(myLibraryWatched.movies, paginationLibraryOptions);
+  //   createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie);
 }

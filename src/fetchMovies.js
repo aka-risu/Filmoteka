@@ -47,4 +47,7 @@ export default class FilmApiService {
   setPage(pageNumber) {
     this.page = pageNumber;
   }
+  //   page = function () {
+  //     return this.page;
+  //   };
 }

@@ -1,48 +1,84 @@
-import { template } from 'handlebars';
-import movieCard from './movieCard.hbs';
-export default function createPagination(
-  items,
-  currentPage,
-  pages = 0,
-  template,
-) {
-  const list_element = document.getElementById('movies-list');
-  const pagination_element = document.getElementById('pagination');
+export default class Pagination {
+  constructor(
+    // items,
+    {
+      // items,
+      currentPage,
+      pages,
+      template,
+      rows,
+      container,
+      paginationContainer,
+      pagesShown,
+    },
+  ) {
+    // this.items = [];
+    this.currentPage = parseInt(currentPage);
+    this.pages = pages ? parseInt(pages) : Math.ceil(this.items.length / rows);
+    this.template = template;
+    this.rows = rows ? rows : 20;
+    this.refs = this.findRefs(container, paginationContainer);
+    this.pagesShown = pagesShown ? pagesShown : 5;
+  }
+  findRefs = (container, paginationContainer) => {
+    return {
+      containerRef: document.querySelector(`${container}`),
+      paginationContainerRef: document.querySelector(`${paginationContainer}`),
+    };
+  };
+  create(items) {
+    this.items = items;
+    this.displayList(this.items, this.refs.containerRef, this.template);
+    this.setUpPagination(
+      this.items,
+      this.refs.paginationContainerRef,
+      this.pages,
+      this.currentPage,
+      this.pagesShown,
+    );
+  }
+  currentPage(currentPage) {
+    this.currentPage = currentPage;
+  }
+  //   container = document.getElementById('movies-list');
+  //   paginationContainer = document.getElementById('pagination');
 
-  let current_page = currentPage;
-  let rows = 20;
-  let page_count = pages === 0 ? Math.ceil(items.length / rows) : pages;
-  console.log(page_count);
-  DisplayList(items, list_element, template);
+  //   current_page = currentPage;
+  //   rows = 20;
+  //   page_count = pages === 0 ? Math.ceil(items.length / rows) : pages;
+
+  //   displayList(this.items, container, template);
   // if (items.length === 0)
-  SetUpPagination(items, pagination_element, page_count);
+  //   SetUpPagination(items, paginationContainer, page_count);
 
-  function DisplayList(items, wrapper, template) {
+  displayList(items, wrapper, template) {
     wrapper.innerHTML = '';
     wrapper.insertAdjacentHTML('beforeend', template(items));
   }
-  function SetUpPagination(items, wrapper, page_count) {
+  setUpPagination(items, wrapper, pages, currentPage, pagesShown) {
+    // console.log(parseInt(currentPage));
+    currentPage = parseInt(currentPage);
     // console.log(pages)
     wrapper.innerHTML = '';
     // let page_count = Math.ceil(items.length / rows_per_page)
     // let page_count = pages
-    let pages_shown = 5;
-    let currentPage = parseInt(current_page);
+    // let pagesShown = 5;
+    // let currentPage = parseInt(this.currentPage);
 
-    if (page_count <= 1) {
-      let btn = PaginationButton(1);
+    if (pages <= 1) {
+      let btn = this.paginationButton(currentPage, 1);
       wrapper.appendChild(btn);
       btn.dataset.index = 1;
       return;
     }
-    if (page_count > 5) {
-      navigationButton(wrapper, '<', 'left');
+    if (pages > 5) {
+      this.navigationButton(wrapper, '<', 'left');
     }
-    let firstBtn = PaginationButton(1, items);
+    let firstBtn = this.paginationButton(currentPage, 1);
     wrapper.appendChild(firstBtn);
     firstBtn.dataset.index = 1;
 
-    if (currentPage >= pages_shown) {
+    if (currentPage >= pagesShown) {
       let dots = document.createElement('button');
       dots.innerText = '...';
       wrapper.appendChild(dots);
@@ -66,39 +102,39 @@ export default function createPagination(
     }
 
     for (let j = 0; j < btnShown; j++) {
-      if (start > page_count - 1) {
+      if (start > pages - 1) {
         break;
       }
-      let btn = PaginationButton(start);
+      let btn = this.paginationButton(currentPage, start);
 
       wrapper.appendChild(btn);
 
       btn.dataset.index = start;
       start++;
     }
-    if (currentPage <= page_count - 4) {
+    if (currentPage <= pages - 4) {
       let dots = document.createElement('button');
       dots.innerText = '...';
       wrapper.appendChild(dots);
       dots.disabled = true;
     }
-    let lastBtn = PaginationButton(page_count);
+    let lastBtn = this.paginationButton(currentPage, pages);
     wrapper.appendChild(lastBtn);
-    lastBtn.dataset.index = page_count;
-    if (page_count > 5) {
-      navigationButton(wrapper, '>', 'right');
+    lastBtn.dataset.index = pages;
+    if (pages > 5) {
+      this.navigationButton(wrapper, '>', 'right');
     }
   }
-  function navigationButton(wrapper, text, type) {
+  navigationButton(wrapper, text, type) {
     let navButton = document.createElement('button');
     navButton.innerText = text;
     wrapper.appendChild(navButton);
     navButton.classList.add(`${type}-button`);
   }
-  function PaginationButton(page) {
+  paginationButton(currentPage, page) {
     let button = document.createElement('button');
     button.innerText = page;
-    if (current_page == page) {
+    if (currentPage === page) {
       button.classList.add('active');
     }
     return button;
