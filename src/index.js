@@ -1,4 +1,4 @@
-import './styles.css';
+import './styles.scss';
 import './fetchMovies';
 import myLibraryMovie from './myLibraryMovie.hbs';
 import modalMovieCard from './modalMovieCard.hbs';
