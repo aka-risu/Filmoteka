@@ -1,14 +1,14 @@
 import './styles.scss';
-import './fetchMovies';
-import myLibraryMovie from './myLibraryMovie.hbs';
-import modalMovieCard from './modalMovieCard.hbs';
-import FilmApiService from './fetchMovies';
-import getGenres from './getGenres';
-import Pagination from './paginator';
-import movieCard from './movieCard.hbs';
+import './js/fetchMovies';
+import myLibraryMovie from './templates/myLibraryMovie.hbs';
+import modalMovieCard from './templates/modalMovieCard.hbs';
+import FilmApiService from './js/fetchMovies';
+import getGenres from './js/getGenres';
+import Pagination from './js/paginator';
+import movieCard from './templates/movieCard.hbs';
 
-import myLibrary from './myLibrary';
-import './modal.js';
+import myLibrary from './js/myLibrary';
+import './js/modal.js';
 
 const refs = {
   movieListRef: document.querySelector('.movies-list'),
