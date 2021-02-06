@@ -48,8 +48,8 @@ const paginationLibraryOptions = {
   container: '.movies-list',
   paginationContainer: '.pagination',
   rows: 3,
+  fullArray: false,
 };
-// createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
 const pagination = new Pagination(paginationOptions);
 const paginationLibrary = new Pagination(paginationLibraryOptions);
 const paginator = document.querySelector('.pagination');
@@ -80,6 +80,8 @@ function renderMainPage(e) {
   refs.bodyRef.classList.remove('js-my-library-watched');
   paginator.removeEventListener('click', searchFilms);
   renderTrendingMovies();
+  paginator.removeEventListener('click', showLibraryQueuePagination);
+  paginator.removeEventListener('click', showLibraryWatchedPagination);
   paginator.addEventListener('click', trendingSearch);
 }
 function createSearchForm() {
@@ -97,14 +99,11 @@ function renderTrendingMovies() {
     });
 }
 
-function trendingSearch(event) {
-  handleSearch(event, renderTrendingMovies);
-}
-
 function handleSearch(event, callback) {
   if (event.target.nodeName !== 'BUTTON') {
     return;
   }
+  filmApiService.setPage(1);
   if (event.target.classList.value === 'left-button') {
     if (filmApiService.page <= 1) {
       event.target.disabled = true;
@@ -121,7 +120,7 @@ function handleSearch(event, callback) {
     const page = event.target.dataset.index;
     filmApiService.setPage(page);
   }
-  console.log(filmApiService.page);
+  console.log('handleSearch');
   callback();
 }
 
@@ -138,13 +137,6 @@ function searchMovies() {
       pagination.currentPage = filmApiService.page;
       pagination.pages = filmApiService.totalPages;
       pagination.create(array);
-      //   new Pagination(array, paginationOptions);
-      //   createPagination(
-      //     array,
-      //     filmApiService.page,
-      //     filmApiService.totalPages,
-      //     movieCard,
-      //   );
     });
 }
 
@@ -172,8 +164,14 @@ function search(e) {
 
   searchMovies();
 }
-function showLibraryFilmPagination(event) {
+function trendingSearch(event) {
+  handleSearch(event, renderTrendingMovies);
+}
+function showLibraryWatchedPagination(event) {
   handleSearch(event, renderWatchedList);
+}
+function showLibraryQueuePagination(event) {
+  handleSearch(event, renderQueueList);
 }
 function searchFilms(event) {
   handleSearch(event, searchMovies);
@@ -279,13 +277,16 @@ function closeModal(event) {
 function renderMyLibrary(e) {
   e.preventDefault();
   hideErrorMessage();
+  refs.bodyRef.classList.add('js-my-library-watched');
   refs.searchFormRef.innerHTML = '';
   refs.btnMyLibrary.innerHTML = '';
 
   createMyLibraryButtons();
+  filmApiService.setPage(1);
   renderWatchedList();
-  paginator.addEventListener('click', showLibraryFilmPagination);
-  refs.bodyRef.classList.add('js-my-library-watched');
+  paginator.removeEventListener('click', trendingSearch);
+  paginator.removeEventListener('click', searchFilms);
+  //   paginator.addEventListener('click', showLibraryFilmPagination);
 }
 function createMyLibraryButtons() {
   const buttons = `<button class="btn-watched">Watched</button><button class="btn-queue">Queue</button>`;
@@ -293,9 +294,11 @@ function createMyLibraryButtons() {
 }
 function renderMyLibraryList(e) {
   if (e.target.classList.value === 'btn-watched') {
+    filmApiService.page = 1;
     renderWatchedList();
   }
   if (e.target.classList.value === 'btn-queue') {
+    filmApiService.page = 1;
     renderQueueList();
   }
 }
@@ -304,18 +307,25 @@ function renderWatchedList() {
   refs.bodyRef.classList.remove('js-my-library-queue');
   const localMovies = localStorage.getItem('moviesWatchedList');
   myLibraryWatched.movies = JSON.parse(localMovies);
-  paginationLibrary.currentPage = 1;
-  paginationLibrary.create(myLibraryWatched.movies);
-  console.log(paginationLibrary.pages);
 
-  //   new Pagination(myLibraryWatched.movies, paginationLibraryOptions);
-  //   createPagination(myLibraryWatched.movies, 1, 0, myLibraryMovie);
+  paginationLibrary.currentPage = filmApiService.page;
+
+  paginationLibrary.create(myLibraryWatched.movies);
+
+  paginator.removeEventListener('click', showLibraryWatchedPagination);
+  paginator.removeEventListener('click', showLibraryQueuePagination);
+  paginator.addEventListener('click', showLibraryWatchedPagination);
 }
 function renderQueueList() {
   refs.bodyRef.classList.add('js-my-library-queue');
   refs.bodyRef.classList.remove('js-my-library-watched');
   const localMovies = localStorage.getItem('moviesQueueList');
   myLibraryQueue.movies = JSON.parse(localMovies);
+  paginationLibrary.currentPage = filmApiService.page;
+
   paginationLibrary.create(myLibraryQueue.movies);
-  //   createPagination(myLibraryQueue.movies, 1, 0, myLibraryMovie);
+
+  paginator.removeEventListener('click', showLibraryWatchedPagination);
+  paginator.removeEventListener('click', showLibraryQueuePagination);
+  paginator.addEventListener('click', showLibraryQueuePagination);
 }
