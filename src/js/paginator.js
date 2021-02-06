@@ -1,32 +1,25 @@
 export default class Pagination {
-  constructor(
-    // items,
-    {
-      // items,
-      currentPage,
-      pages,
-      template,
-      rows,
-      container,
-      paginationContainer,
-      pagesShown,
-      fullArray,
-    },
-  ) {
-    // this.items = [];
+  constructor({
+    currentPage,
+    pages,
+    template,
+    rows,
+    container,
+    paginationContainer,
+    pagesShown,
+    fullArray,
+  }) {
     this.currentPage = parseInt(currentPage);
     this.rows = rows ? rows : 20;
-    if (!pages) {
-      this.pages = 0;
-    } else
-      this.pages = pages
-        ? parseInt(pages)
-        : Math.ceil(this.items.length / rows);
+    this.pages = pages ? parseInt(pages) : 0;
     this.template = template;
 
     this.refs = this.findRefs(container, paginationContainer);
     this.pagesShown = pagesShown ? pagesShown : 5;
     this.fullArray = fullArray ? fullArray : false;
+  }
+  updatePages() {
+    this.pages = Math.ceil(this.items.length / this.rows);
   }
   findRefs = (container, paginationContainer) => {
     return {
@@ -36,7 +29,7 @@ export default class Pagination {
   };
   create(items) {
     this.items = items;
-    this.pages = this.pages
+    this.pages = this.fullArray
       ? parseInt(this.pages)
       : Math.ceil(this.items.length / this.rows);
     this.setUpPagination(
@@ -58,40 +51,19 @@ export default class Pagination {
   currentPage(currentPage) {
     this.currentPage = currentPage;
   }
-  //   container = document.getElementById('movies-list');
-  //   paginationContainer = document.getElementById('pagination');
-
-  //   current_page = currentPage;
-  //   rows = 20;
-  //   page_count = pages === 0 ? Math.ceil(items.length / rows) : pages;
-
-  //   displayList(this.items, container, template);
-  // if (items.length === 0)
-  //   SetUpPagination(items, paginationContainer, page_count);
 
   displayList(items, wrapper, template, pages, currentPage, rows) {
     wrapper.innerHTML = '';
-
-    //   const moviesShown = template(items)
-
-    //   for (i = 0; i < pages; i++) {
-
     const pageItems = this.fullArray
       ? this.items
       : items.slice((currentPage - 1) * rows, currentPage * rows);
-    //   }
     const moviesShown = template(pageItems);
     wrapper.insertAdjacentHTML('beforeend', moviesShown);
   }
   setUpPagination(items, wrapper, pages, currentPage, pagesShown) {
-    // console.log(parseInt(currentPage));
     currentPage = parseInt(currentPage);
-    // console.log(pages)
+
     wrapper.innerHTML = '';
-    // let page_count = Math.ceil(items.length / rows_per_page)
-    // let page_count = pages
-    // let pagesShown = 5;
-    // let currentPage = parseInt(this.currentPage);
 
     if (pages <= 1) {
       let btn = this.paginationButton(currentPage, 1);
