@@ -59,7 +59,7 @@
 }
 
 .current:after {
-  /// добавлять класс на кнопку
+  /// добавлять класс на ссылку
   position: absolute;
   content: '';
   display: block;
@@ -151,7 +151,7 @@
 }
 
 .current_btn {
-  // добавлять класс
+  // добавлять класс на кнопку
   background-color: #ff6b08;
   border: 1px solid transparent;
 }
