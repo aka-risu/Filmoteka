@@ -11,31 +11,31 @@
   </head>
 
   <body>
-    <header class="header">
-      <div class="container">
-        <div class="navigation">
-          <a class="navigation-logo" href="">
-            <svg class="navigation-logo-icon">
-            <use xlink:href="./images/header/sprite.svg#film"></use>
-            </svg>
-            <span class="navigation-logo-text">Filmoteka</span></a>
-          <ul class="navigation-menu">
-            <li class="navigation-home"><a href="">Home</a></li>
-            <li class="navigation-my-library"><a href="">My library</a></li>
-          </ul>
+    <header class="header heder-bg-home" >
+        <div class="container">
+          <div class="navigation">
+            <a class="navigation-logo" href="">
+              <svg class="navigation-logo-icon">
+              <use xlink:href="./images/header/sprite.svg#film"></use>
+              </svg>
+              <span class="navigation-logo-text">Filmoteka</span></a>
+            <ul class="navigation-menu">
+              <li class="navigation-home"><a class="navigation-home-link" href="">Home</a></li>
+              <li class="navigation-my-library"><a class="navigation-my-library-link" href="">My library</a></li>
+            </ul>
+          </div>
+          <form class="search-form">
+            <!-- <input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies">
+        <button class="search-button" type="submit">Search</button> -->
+          </form>
+          <p class="error-message is-hidden">
+            Search result not successful. Enter the correct movie name
+          </p>
+          <div class="my-library-buttons">
+            <!-- <button class="btn-watched is-hidden">Watched</button>
+        <button class="btn-queue is-hidden">Queue</button> -->
+          </div>
         </div>
-        <form class="search-form">
-          <!-- <input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies">
-      <button class="search-button" type="submit">Search</button> -->
-        </form>
-        <p class="error-message is-hidden">
-          Search result not successful. Enter the correct movie name
-        </p>
-        <div class="my-library-buttons">
-          <!-- <button class="btn-watched is-hidden">Watched</button>
-      <button class="btn-queue is-hidden">Queue</button> -->
-        </div>
-      </div>
     </header>
     <main>
      <div class="pagination" id="pagination"></div>

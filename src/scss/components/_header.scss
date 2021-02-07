@@ -1,17 +1,25 @@
 .header {
-  padding-top: 46px;
-  padding-bottom: 97px;
-  background-image: url(./images/header/Header-mobile.jpg);
+  position: relative;
   display: block;
-  background-position: center;
+  background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
-
+  padding-top: 46px;
+  padding-bottom: 115px;
   margin-left: auto;
   margin-right: auto;
-  // @media screen and (min-width: 320px) and (max-width: 1023px) {
-  //   width: auto;
-  // }
+}
+
+.heder-bg-home {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(./images/header/Header-mobile-home.jpg);
+  background-color: #000;
+}
+
+.heder-bg-lib {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(./images/header/Header-mobile-my-library.jpg);
+  background-color: #000;
 }
 
 .navigation {
@@ -36,14 +44,11 @@
   display: flex;
   align-items: center;
 
-  font-family: $main-font;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.667;
 
   text-transform: uppercase;
-
-  color: red;
 }
 
 .navigation-home {
@@ -52,8 +57,25 @@
 
 .navigation-my-library {
 }
-.search-form {
+
+.navigation-home-link,
+.navigation-my-library-link {
+  color: $white-color;
   position: relative;
+}
+
+.current:after {
+  /// добавлять класс на кнопку
+  position: absolute;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: $orange-slave-color;
+}
+
+.search-form {
+  position: absolute;
 }
 .search-input {
   padding-right: 14px;
@@ -91,9 +113,49 @@
   border: none;
 }
 
+.my-library-buttons {
+  display: inline-flex;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 .error-message {
   color: red;
 }
+
+.btn-watched {
+  margin-right: 15px;
+}
+
+.btn-watched,
+.btn-queue {
+  cursor: pointer;
+  width: 132px;
+  padding-top: 14px;
+  padding-bottom: 12px;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #fff;
+  text-transform: uppercase;
+  &:hover {
+    background-color: $orange-color;
+  }
+}
+
+.current_btn {
+  // добавлять класс
+  background-color: #ff6b08;
+  border: 1px solid transparent;
+}
+
 @media screen and (max-width: 320px) {
 }
 
