@@ -124,6 +124,11 @@
 
 .error-message {
   color: red;
+  position: absolute;
+  font-size: 14px;
+  line-height: 1.14;
+  bottom: 50px;
+  color: #ff001b;
 }
 
 .btn-watched {
