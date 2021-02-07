@@ -87,7 +87,7 @@ function renderMainPage(e) {
   paginator.addEventListener('click', trendingSearch);
 }
 function createSearchForm() {
-  const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit">Search</button>`;
+  const searchForm = `<input class="search-input" type="text" name="query" autocomplete="off" placeholder="Search for movies"><button class="search-button" type="submit"></button>`;
   refs.searchFormRef.insertAdjacentHTML('beforeend', searchForm);
 }
 
@@ -337,5 +337,4 @@ function renderQueueList() {
 // function openFooterModal() {
 //   document.querySelector('.footer-modal').classList.remove('is-hidden');
 // }
-
 // modal.openModal();
