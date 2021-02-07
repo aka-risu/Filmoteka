@@ -52,6 +52,8 @@ const paginationLibraryOptions = {
 };
 const pagination = new Pagination(paginationOptions);
 const paginationLibrary = new Pagination(paginationLibraryOptions);
+const modal = new ModalWindow({ wrapper: `.footer`, content: 'Hello' });
+
 const paginator = document.querySelector('.pagination');
 
 document.addEventListener('DOMContentLoaded', renderMainPage);
@@ -335,5 +337,5 @@ function renderQueueList() {
 // function openFooterModal() {
 //   document.querySelector('.footer-modal').classList.remove('is-hidden');
 // }
-const modal = new ModalWindow({ wrapper: `.footer`, content: 'Hello' });
-modal.openModal();
+
+// modal.openModal();
