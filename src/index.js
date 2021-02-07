@@ -9,8 +9,7 @@ import Pagination from './js/paginator';
 import movieCard from './templates/movieCard.hbs';
 
 import myLibrary from './js/myLibrary';
-import './js/modal.js';
-import './js/footer_modal';
+import ModalWindow from './js/footer_modal';
 
 const refs = {
   movieListRef: document.querySelector('.movies-list'),
@@ -104,7 +103,7 @@ function handleSearch(event, callback) {
   if (event.target.nodeName !== 'BUTTON') {
     return;
   }
-  filmApiService.setPage(1);
+  //   filmApiService.setPage(1);
   if (event.target.classList.value === 'left-button') {
     if (filmApiService.page <= 1) {
       event.target.disabled = true;
@@ -184,7 +183,7 @@ function handleClickOnMovie(event) {
 
   filmApiService.movieID = event.target.id;
   filmApiService.fetchMovieInfo().then(obj => {
-    refs.modalRef.innerHTML = '';
+    // refs.modalRef.innerHTML = '';
     refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj));
     refs.modalRef.classList.remove('is-hidden');
 
@@ -264,6 +263,7 @@ function handleMyLibraryMovie(event) {
 
 function closeModal(event) {
   if (event.target.classList.value === 'overlay' || event.keyCode === 27) {
+    refs.modalRef.innerHTML = '';
     refs.modalRef.classList.add('is-hidden');
     refs.bodyRef.classList.remove('modal-open');
     refs.modalRef.removeEventListener('click', closeModal);
@@ -330,3 +330,10 @@ function renderQueueList() {
   paginator.removeEventListener('click', showLibraryQueuePagination);
   paginator.addEventListener('click', showLibraryQueuePagination);
 }
+
+// document.querySelector('.footer').addEventListener('click', openFooterModal);
+// function openFooterModal() {
+//   document.querySelector('.footer-modal').classList.remove('is-hidden');
+// }
+const modal = new ModalWindow({ wrapper: `.footer`, content: 'Hello' });
+modal.openModal();
