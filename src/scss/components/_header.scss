@@ -43,7 +43,7 @@
 
   text-transform: uppercase;
 
-  color: #ffffff;
+  color: red;
 }
 
 .navigation-home {
@@ -52,8 +52,11 @@
 
 .navigation-my-library {
 }
-
+.search-form {
+  position: relative;
+}
 .search-input {
+  padding-right: 14px;
   width: 280px;
 
   background: transparent;
@@ -77,6 +80,15 @@
 }
 
 .search-button {
+  position: absolute;
+  right: 0;
+  background-image: url(./images/header/search.png);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  border: none;
 }
 
 .error-message {
