@@ -3,23 +3,28 @@ export default class Pagination {
     currentPage,
     pages,
     template,
-    rows,
+    itemsOnPage,
     container,
     paginationContainer,
-    pagesShown,
+    buttonsShown,
     fullArray,
+    callback,
   }) {
     this.currentPage = parseInt(currentPage);
-    this.rows = rows ? rows : 20;
+    this.itemsOnPage = itemsOnPage ? itemsOnPage : 20;
     this.pages = pages ? parseInt(pages) : 0;
     this.template = template;
 
     this.refs = this.findRefs(container, paginationContainer);
-    this.pagesShown = pagesShown ? pagesShown : 5;
+    this.buttonsShown = buttonsShown ? buttonsShown : 5;
     this.fullArray = fullArray ? fullArray : false;
+    this.callback = callback;
+    // this.refs.paginationContainerRef.addEventListener('click', event =>
+    //   this.handlePaginationClick(event, this.currentPage, this.callback),
+    // );
   }
   updatePages() {
-    this.pages = Math.ceil(this.items.length / this.rows);
+    this.pages = Math.ceil(this.items.length / this.itemsOnPage);
   }
   findRefs = (container, paginationContainer) => {
     return {
@@ -31,13 +36,13 @@ export default class Pagination {
     this.items = items;
     this.pages = this.fullArray
       ? parseInt(this.pages)
-      : Math.ceil(this.items.length / this.rows);
+      : Math.ceil(this.items.length / this.itemsOnPage);
     this.setUpPagination(
       this.items,
       this.refs.paginationContainerRef,
       this.pages,
       this.currentPage,
-      this.pagesShown,
+      this.buttonsShown,
     );
     this.displayList(
       this.items,
@@ -45,22 +50,28 @@ export default class Pagination {
       this.template,
       this.pages,
       this.currentPage,
-      this.rows,
+      this.itemsOnPage,
     );
+
+    this.refs.paginationContainerRef.removeEventListener('click', this.click);
+    this.refs.paginationContainerRef.addEventListener('click', this.click);
   }
+  click = event => {
+    this.handlePaginationClick(event, this.currentPage, this.callback);
+  };
   currentPage(currentPage) {
     this.currentPage = currentPage;
   }
 
-  displayList(items, wrapper, template, pages, currentPage, rows) {
+  displayList(items, wrapper, template, pages, currentPage, itemsOnPage) {
     wrapper.innerHTML = '';
     const pageItems = this.fullArray
       ? this.items
-      : items.slice((currentPage - 1) * rows, currentPage * rows);
+      : items.slice((currentPage - 1) * itemsOnPage, currentPage * itemsOnPage);
     const moviesShown = template(pageItems);
     wrapper.insertAdjacentHTML('beforeend', moviesShown);
   }
-  setUpPagination(items, wrapper, pages, currentPage, pagesShown) {
+  setUpPagination(items, wrapper, pages, currentPage, buttonsShown) {
     currentPage = parseInt(currentPage);
 
     wrapper.innerHTML = '';
@@ -72,13 +83,14 @@ export default class Pagination {
       return;
     }
     if (pages > 5) {
-      this.navigationButton(wrapper, '<', 'left');
+      this.navigationButton(wrapper, '', 'left');
     }
+
     let firstBtn = this.paginationButton(currentPage, 1);
     wrapper.appendChild(firstBtn);
     firstBtn.dataset.index = 1;
 
-    if (currentPage >= pagesShown) {
+    if (currentPage >= buttonsShown) {
       let dots = document.createElement('button');
       dots.innerText = '...';
       wrapper.appendChild(dots);
@@ -138,5 +150,32 @@ export default class Pagination {
       button.classList.add('active');
     }
     return button;
+  }
+
+  handlePaginationClick(event, currentPage, callback) {
+    if (event.target.nodeName !== 'BUTTON') {
+      return;
+    }
+    //   filmApiService.setPage(1);
+    if (event.target.classList.value === 'left-button') {
+      if (currentPage <= 1) {
+        event.target.disabled = true;
+        return;
+      }
+      this.currentPage = this.currentPage - 1;
+    } else if (event.target.classList.value === 'right-button') {
+      if (currentPage >= this.pages) {
+        event.target.disabled = true;
+        return;
+      }
+      this.currentPage = parseInt(this.currentPage) + 1;
+      // filmApiService.setPage(parseInt(filmApiService.page) + 1);
+    } else {
+      const page = event.target.dataset.index;
+      this.currentPage = page;
+      // filmApiService.setPage(page);
+    }
+    console.log('handlePaginationClick');
+    callback();
   }
 }

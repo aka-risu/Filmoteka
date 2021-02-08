@@ -24,7 +24,7 @@ export default class ModalWindow {
     this.refs.modalRef.classList.add('is-hidden');
     this.refs.openRef.addEventListener('click', this.openModal.bind(this));
   }
-  openModal(event) {
+  openModal() {
     this.refs.modalRef.classList.remove('is-hidden');
     this.refs.bodyRef.classList.add('modal-open');
     window.addEventListener('click', this.closeModal.bind(this));
