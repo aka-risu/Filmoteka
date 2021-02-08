@@ -1,3 +1,4 @@
+import getGenres from './getGenres';
 const API_KEY = '599b2da5737417d6d547b02cdbe7d5e8';
 
 export default class FilmApiService {
@@ -8,7 +9,8 @@ export default class FilmApiService {
     this.movieID = '';
   }
 
-  fetchTrendingMovies() {
+  fetchTrendingMovies(page) {
+    this.page = page;
     return fetch(
       `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&page=${this.page}`,
     )
@@ -16,10 +18,12 @@ export default class FilmApiService {
       .then(object => {
         this.totalPages = 20;
         return object.results;
-      });
+      })
+      .then(array => getGenres(array));
   }
 
-  fetchMovieByWord() {
+  fetchMovieByWord(page) {
+    this.page = page;
     return fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${this.query}&language=en-US&page=${this.page}&include_adult=false`,
     )
@@ -28,9 +32,10 @@ export default class FilmApiService {
         // console.log(obj.total_pages)
         // console.log(obj.results)
         this.totalPages = obj.total_pages < 20 ? obj.total_pages : 20;
-        // console.log(this.totalPages)
+        console.log(this.totalPages);
         return obj.results;
-      });
+      })
+      .then(array => getGenres(array));
   }
   fetchMovieInfo() {
     return fetch(
@@ -47,7 +52,4 @@ export default class FilmApiService {
   setPage(pageNumber) {
     this.page = pageNumber;
   }
-  //   page = function () {
-  //     return this.page;
-  //   };
 }

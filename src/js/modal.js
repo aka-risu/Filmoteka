@@ -1,22 +1,51 @@
-export default class ModalWindow {
-  constructor({ wrapper, content }) {
-    this.refs = this.findRefs(wrapper);
-    this.content = content;
-  }
-  findRefs = container => {
-    return {
-      wrapper: document.querySelector(`${container}`),
-    };
-  };
-  openModal() {
-    const modal = `<div class="modal">
-      
-        <div class="overlay">
-          <div class="modal-window">
-      <div>${this.content}<div>
-          </div>
-        </div>
-      </div>`;
-    this.refs.wrapper.insertAdjacentHTML('beforeend', modal);
+import refs from './components/refs';
+import filmApiService from './api/filmApiServiceObj';
+import modalMovieCard from '../templates/modalMovieCard.hbs';
+import renderWatchedList from './Library/handleMyLibrary';
+import { myLibraryQueue, myLibraryWatched } from '../js/Library/myLibraryObj';
+
+refs.movieListRef.addEventListener('click', handleClickOnMovie);
+
+function handleClickOnMovie(event) {
+  event.preventDefault();
+
+  if (event.target.nodeName !== 'A') return;
+
+  filmApiService.movieID = event.target.id;
+  filmApiService.fetchMovieInfo().then(obj => {
+    refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj));
+    refs.modalRef.classList.remove('is-hidden');
+
+    if (myLibraryWatched.findMovie(obj.id)) {
+      const btnWatched = document.querySelector('.btn-add-watched');
+      btnWatched.textContent = 'Remove from watched';
+      btnWatched.classList.remove('btn-add-watched');
+      btnWatched.classList.add('btn-remove-watched');
+    }
+    if (myLibraryQueue.findMovie(obj.id)) {
+      const btnWatched = document.querySelector('.btn-add-queue');
+      btnWatched.textContent = 'Remove from queue';
+      btnWatched.classList.remove('btn-add-queue');
+      btnWatched.classList.add('btn-remove-queue');
+    }
+  });
+
+  refs.bodyRef.classList.add('modal-open');
+  // refs.modalRef.addEventListener('click', handleMyLibraryMovie);
+  refs.modalRef.addEventListener('click', closeModal);
+  window.addEventListener('keyup', closeModal);
+}
+
+function closeModal(event) {
+  if (event.target.classList.value === 'overlay' || event.keyCode === 27) {
+    refs.modalRef.innerHTML = '';
+    refs.modalRef.classList.add('is-hidden');
+    refs.bodyRef.classList.remove('modal-open');
+    refs.modalRef.removeEventListener('click', closeModal);
+    window.removeEventListener('keyup', closeModal);
+    // refs.modalRef.removeEventListener('click', handleMyLibraryMovie);
+    if (refs.bodyRef.classList.value === 'js-my-library-watched') {
+      renderWatchedList();
+    }
   }
 }
