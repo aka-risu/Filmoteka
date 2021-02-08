@@ -134,7 +134,7 @@ export default class Pagination {
     wrapper.appendChild(lastBtn);
     lastBtn.dataset.index = pages;
     if (pages > 5) {
-      this.navigationButton(wrapper, '>', 'right');
+      this.navigationButton(wrapper, '', 'right');
     }
   }
   navigationButton(wrapper, text, type) {

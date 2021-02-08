@@ -8,3 +8,4 @@ import modal from './js/modal';
 
 window.addEventListener('DOMContentLoaded', renderMainPage);
 refs.homeRef.addEventListener('click', renderMainPage);
+refs.logoRef.addEventListener('click', renderMainPage);
