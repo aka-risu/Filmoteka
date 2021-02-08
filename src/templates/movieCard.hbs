@@ -1,15 +1,17 @@
 {{#each this}}
-<li class="movie-card">
-    <a href="#" class="movie-link" id="{{this.id}}">
-        <img class="movie-img" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="">
-        <h2 class="movie-title">{{this.title}}</h2>
+<li class="movie-card" id="{{this.id}}">
+    {{#if poster_path}} <img class="movie-img" src='https://image.tmdb.org/t/p/w300{{this.poster_path}}' loading="lazy"
+        alt='Film {{this.title}} poster' />
+    {{else}}
+    <img class="movie-img" src='../images/gallary/fallback.png' loading="lazy" alt='Film {{title}} poster' />
+    {{/if}}
+    <h2 class="movie-title">{{this.title}}</h2>
+    <div class="card-wrapper">
         <ul class="movie-genres">{{#each this.genres}}
             <li class="movie-genre">{{this}}</li>
             {{/each}}
         </ul>
-
         <p class="movie-date">{{this.release}}</p>
-    </a>
+    </div>
 </li>
-
 {{/each}}
