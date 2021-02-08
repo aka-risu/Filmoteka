@@ -18,8 +18,10 @@ export default function getGenres(array) {
       // console.log(genres)
       return array.map(function (obj, index) {
         obj.genres = genres[index];
+
         obj.release = parseInt(obj.release_date);
         return obj;
       });
+      // .obj.genres.slice(0, 1);;
     });
 }

@@ -1,4 +1,5 @@
 const refs = {
+  headerRef: document.querySelector('.header'),
   movieListRef: document.querySelector('.movies-list'),
   navigationRef: document.querySelector('.navigation'),
   logoRef: document.querySelector('.navigation-logo'),

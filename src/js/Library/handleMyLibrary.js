@@ -9,7 +9,6 @@ import clearPage from '../components/clearPage';
 import { setPaginationLibraryOptions } from '../pagination/paginationSettings';
 import { myLibraryQueue, myLibraryWatched } from './myLibraryObj';
 
-refs.myLibraryRef.addEventListener('click', renderMyLibrary);
 refs.btnsMyLibrary.addEventListener('click', renderMyLibraryList);
 
 function handleMyLibraryMovie(event) {
@@ -70,6 +69,8 @@ function renderMyLibrary(event) {
   event.preventDefault();
   hideErrorMessage();
   refs.bodyRef.classList.add('js-my-library-watched');
+  refs.headerRef.classList.remove('header-bg-home');
+  refs.headerRef.classList.add('header-bg-lib');
   clearPage();
   setPaginationLibraryOptions();
 
@@ -106,3 +107,4 @@ function renderQueueList() {
   pagination.callback = renderQueueList;
   pagination.create(myLibraryQueue.movies);
 }
+export default renderMyLibrary;
