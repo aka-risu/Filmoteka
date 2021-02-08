@@ -1,94 +1,63 @@
-.movies-list {
-  padding: 0;
-  margin: 0;
-  margin-right: auto;
-  margin-left: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  list-style: none;
+.movie-card {
+  margin-bottom: 20px;
 }
+
 .movie-img {
-  width: 100%;
+  width: 280px;
+  height: 402px;
+
+  border-radius: 5px;
+
+  margin-bottom: 10px;
 }
 
-.list {
-  /* display: flex; */
-  width: 100%;
-  border: 1px solid #cccccc;
-}
-.list .item {
-  padding: 15px;
-  border: 1px solid #cccccc;
-}
-.list .item:last-of-type {
-  border-bottom: none;
-}
-.list .item:hover {
-  background-color: #fff;
+.movie-title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.667;
+  text-transform: uppercase;
+
+  color: $black-color;
+
+  margin-bottom: 6px;
 }
 
-.movie-card,
-.movie-img,
-.movie-title,
-.movie-genres,
+.card-wrapper {
+  display: flex;
+}
+
+.movie-genres {
+  display: flex;
+}
+
+.movie-genre {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.333;
+
+  color: $orange-color;
+
+  &:not(:last-child)::after {
+    content: ',';
+    margin-right: 3px;
+  }
+
+  &:last-child {
+    margin-right: 3px;
+  }
+}
+
 .movie-date {
-  pointer-events: none;
-}
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.333;
 
-.movie-link {
-  pointer-events: initial;
-  display: block;
-  height: 100%;
-}
-
-@media screen and (max-width: 767px) {
-  .wrapper {
-    margin: 0;
-    margin-right: auto;
-    margin-left: auto;
-
-    padding: 20px;
-  }
-  .movie-card {
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .wrapper {
-    margin: 0;
-    margin-right: auto;
-    margin-left: auto;
-
-    padding-top: 60px;
-    padding-left: 75px;
-    padding-right: 75px;
-    padding: 50px;
-  }
-  .movie-card {
-    width: calc((100% - 30px) / 2);
-  }
-  .movie-card {
-    margin-bottom: 30px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .wrapper {
-    margin: 0;
-    margin-right: auto;
-    margin-left: auto;
-
-    padding: 20px;
-  }
-  .movies-list {
-    width: 882px;
-  }
-  .movie-card {
-    width: calc((100% - 90px) / 4);
-  }
-  .movie-card {
-    margin-bottom: 30px;
+  color: $orange-color;
+  &::before {
+    content: '|';
+    margin-right: 3px;
   }
 }
