@@ -1,7 +1,11 @@
 .movie-card {
   margin-bottom: 20px;
 }
-
+.movie-img,
+.movie-title,
+.card-wrapper {
+  pointer-events: none;
+}
 .movie-img {
   width: 280px;
   height: 402px;

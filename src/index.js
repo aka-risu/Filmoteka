@@ -2,7 +2,7 @@ import 'normalize.css';
 import './styles.scss';
 import refs from './js/components/refs';
 import './js/search/search';
-import renderMyLibrary from './js/Library/handleMyLibrary';
+import renderMyLibrary from './js/Library/renderMyLibrary';
 import renderMainPage from './js/renderMainPage';
 import modal from './js/modal';
 

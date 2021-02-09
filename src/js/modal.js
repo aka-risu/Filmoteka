@@ -1,22 +1,24 @@
 import refs from './components/refs';
 import filmApiService from './api/filmApiServiceObj';
 import modalMovieCard from '../templates/modalMovieCard.hbs';
-import renderWatchedList from './Library/handleMyLibrary';
+import renderWatchedList from './Library/renderMyLibrary';
 import { myLibraryQueue, myLibraryWatched } from '../js/Library/myLibraryObj';
+// import manageLibraryMovies from './Library/manageLibraryMovies';
 
 refs.movieListRef.addEventListener('click', handleClickOnMovie);
 
 function handleClickOnMovie(event) {
   event.preventDefault();
-
-  if (event.target.nodeName !== 'A') return;
+  // manageLibraryMovies(event);
+  if (event.target.nodeName !== 'LI') return;
 
   filmApiService.movieID = event.target.id;
   filmApiService.fetchMovieInfo().then(obj => {
     refs.modalRef.insertAdjacentHTML('beforeend', modalMovieCard(obj));
     refs.modalRef.classList.remove('is-hidden');
-
+    console.log(myLibraryWatched);
     if (myLibraryWatched.findMovie(obj.id)) {
+      console.log('Hey');
       const btnWatched = document.querySelector('.btn-add-watched');
       btnWatched.textContent = 'Remove from watched';
       btnWatched.classList.remove('btn-add-watched');
