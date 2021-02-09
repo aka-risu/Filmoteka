@@ -80,7 +80,9 @@
     width: 293px;
     height: 398px;
   }
+}
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
   .movie-card:not(:nth-last-child(-n + 2)) {
     margin-bottom: 30px;
   }
@@ -92,7 +94,15 @@
 
 @media screen and (min-width: 1024px) {
   .movie-img {
-    width: 293px;
-    height: 398px;
+    width: 205px;
+    height: 278px;
+  }
+
+  .movies-list {
+    justify-content: space-between;
+  }
+
+  .movie-card:not(:nth-last-child(-n + 4)) {
+    margin-bottom: 30px;
   }
 }
