@@ -1,11 +1,9 @@
-.movie-card {
-  margin-bottom: 20px;
-}
 .movie-img,
 .movie-title,
 .card-wrapper {
   pointer-events: none;
 }
+
 .movie-img {
   width: 280px;
   height: 402px;
@@ -51,6 +49,10 @@
   &:last-child {
     margin-right: 3px;
   }
+
+  &:not(:nth-child(-n + 2)) {
+    display: none;
+  }
 }
 
 .movie-date {
@@ -63,5 +65,57 @@
   &::before {
     content: '|';
     margin-right: 3px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .movie-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .movies-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .movie-img {
+    width: 293px;
+    height: 398px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .movie-card:not(:nth-last-child(-n + 2)) {
+    margin-bottom: 30px;
+  }
+
+  .movie-card:nth-child(odd) {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .movie-img {
+    width: 205px;
+    height: 278px;
+  }
+
+  .movie-title {
+    font-size: 10px;
+  }
+
+  .movie-genre,
+  .movie-date {
+    font-size: 10px;
+  }
+
+  .movie-card:not(:nth-child(4n + 4)) {
+    margin-right: 20px;
+  }
+
+  .movie-card:not(:nth-last-child(-n + 4)) {
+    margin-bottom: 30px;
   }
 }

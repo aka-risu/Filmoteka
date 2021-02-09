@@ -53,6 +53,7 @@
     "handlebars": "^4.7.6",
     "jquery": "^3.5.1",
     "js-paginator": "0.0.3",
+    "just-handlebars-helpers": "^1.0.18",
     "jw-paginate": "^1.0.4",
     "normalize.css": "^8.0.1",
     "paginationjs": "^2.1.5",
