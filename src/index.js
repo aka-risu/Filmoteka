@@ -4,6 +4,7 @@ import refs from './js/components/refs';
 import './js/search/search';
 import renderMyLibrary from './js/Library/renderMyLibrary';
 import renderMainPage from './js/renderMainPage';
+import footerModal from './js/footer/footerModal';
 import modal from './js/modal';
 
 window.addEventListener('DOMContentLoaded', renderMainPage);

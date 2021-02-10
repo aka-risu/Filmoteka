@@ -4,10 +4,14 @@ import filmApiService from '../api/filmApiServiceObj';
 function manageMyLibraryMovie(event) {
   if (event.target.dataset.action !== 'add') return;
 
-  //   localStorage.setItem(
-  //     'moviesWatchedList',
-  //     JSON.stringify(myLibraryWatched.movies),
-  //   );
+  localStorage.setItem(
+    'moviesWatchedList',
+    JSON.stringify(myLibraryWatched.movies),
+  );
+  localStorage.setItem(
+    'moviesQueueList',
+    JSON.stringify(myLibraryQueue.movies),
+  );
   const localQueueMovies = localStorage.getItem('moviesQueueList');
   myLibraryQueue.movies = JSON.parse(localQueueMovies);
   const localWatchedMovies = localStorage.getItem('moviesWatchedList');
