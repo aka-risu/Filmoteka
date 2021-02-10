@@ -71,31 +71,26 @@ export default class Pagination {
     const moviesShown = template(pageItems);
     wrapper.insertAdjacentHTML('beforeend', moviesShown);
   }
+
   setUpPagination(items, wrapper, pages, currentPage, buttonsShown) {
     currentPage = parseInt(currentPage);
 
     wrapper.innerHTML = '';
 
     if (pages <= 1) {
-      let btn = this.paginationButton(currentPage, 1);
+      let btn = paginationButton(currentPage, 1);
       wrapper.appendChild(btn);
       btn.dataset.index = 1;
       return;
     }
-    if (pages > 5) {
-      this.navigationButton(wrapper, '', 'left');
-    }
 
-    let firstBtn = this.paginationButton(currentPage, 1);
-    wrapper.appendChild(firstBtn);
-    firstBtn.dataset.index = 1;
+    addLeftBtn(wrapper, pages);
+    addFirstButton(currentPage, wrapper);
 
     if (currentPage >= buttonsShown) {
-      let dots = document.createElement('button');
-      dots.innerText = '...';
-      wrapper.appendChild(dots);
-      dots.disabled = true;
+      addSeparator(wrapper);
     }
+
     let start = currentPage <= 3 ? 2 : currentPage - 2;
     let btnShown = 2;
 
@@ -117,39 +112,61 @@ export default class Pagination {
       if (start > pages - 1) {
         break;
       }
-      let btn = this.paginationButton(currentPage, start);
+      let btn = paginationButton(currentPage, start);
 
       wrapper.appendChild(btn);
 
       btn.dataset.index = start;
       start++;
     }
+
     if (currentPage <= pages - 4) {
+      addSeparator(wrapper);
+    }
+
+    addLastButton(wrapper, currentPage, pages);
+    addRightBtn(wrapper, pages);
+
+    function addSeparator(wrapper) {
       let dots = document.createElement('button');
       dots.innerText = '...';
       wrapper.appendChild(dots);
       dots.disabled = true;
     }
-    let lastBtn = this.paginationButton(currentPage, pages);
-    wrapper.appendChild(lastBtn);
-    lastBtn.dataset.index = pages;
-    if (pages > 5) {
-      this.navigationButton(wrapper, '', 'right');
+    function addLeftBtn(wrapper, pages) {
+      if (pages > 5) {
+        navigationButton(wrapper, '', 'left');
+      }
     }
-  }
-  navigationButton(wrapper, text, type) {
-    let navButton = document.createElement('button');
-    navButton.innerText = text;
-    wrapper.appendChild(navButton);
-    navButton.classList.add(`${type}-button`);
-  }
-  paginationButton(currentPage, page) {
-    let button = document.createElement('button');
-    button.innerText = page;
-    if (currentPage === page) {
-      button.classList.add('active');
+    function addRightBtn(wrapper, pages) {
+      if (pages > 5) {
+        navigationButton(wrapper, '', 'right');
+      }
     }
-    return button;
+    function addLastButton(wrapper, currentPage, pages) {
+      let lastBtn = paginationButton(currentPage, pages);
+      wrapper.appendChild(lastBtn);
+      lastBtn.dataset.index = pages;
+    }
+    function addFirstButton(currentPage, wrapper) {
+      let firstBtn = paginationButton(currentPage, 1);
+      wrapper.appendChild(firstBtn);
+      firstBtn.dataset.index = 1;
+    }
+    function paginationButton(currentPage, page) {
+      let button = document.createElement('button');
+      button.innerText = page;
+      if (currentPage === page) {
+        button.classList.add('active');
+      }
+      return button;
+    }
+    function navigationButton(wrapper, text, type) {
+      let navButton = document.createElement('button');
+      navButton.innerText = text;
+      wrapper.appendChild(navButton);
+      navButton.classList.add(`${type}-button`);
+    }
   }
 
   handlePaginationClick(event, currentPage, callback) {
