@@ -1,33 +1,40 @@
-{{!-- <div class="backdrop"> --}}
-    <div class="overlay">
-        <div class="modal-window">
-            <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="">
-            <h2 class="title">{{this.title}}</h2>
-            <div class="stats-names">
-                <p class="stats-vote">Vote/Votes</p>
-                <p class="stats-popularity">Popularity</p>
-                <p class="stats-title">Title</p>
-                <p class="stats-genre">Genre</p>
-            </div>
-            <div class="stats-info">
-                <div class="stats-info-vote">
-                    <p class="stats-info-vote-average">{{this.vote_average}}</p>
-                    <p class="slash">/</p>
-                    <p class="stats-info-vote-count">{{this.vote_count}}</p>
+<div class="overlay">
+    <div class="modal-window">
+        {{#if poster_path}}
+        <img class="movie-card-img" src="https://image.tmdb.org/t/p/w300{{poster_path}}" alt="Film {{title}} poster" />
+        {{else}}
+        <img class="movie-card-img" src="../images/gallary/fallback.png" alt="poster of {{original_title}}" />
+        {{/if}}
+
+        <div class="card-description-wrapper">
+            <h2 class="movie-card-title">{{title}}</h2>
+            <div class="stats-wrapper">
+                <div class="stats-titles">
+                    <p class="stats-title">Vote / Votes</p>
+                    <p class="stats-title">Popularity</p>
+                    <p class="stats-title">Original Title</p>
+                    <p class="stats-title">Genre</p>
                 </div>
-                <p class="stats-info-popularity">{{this.popularity}}</p>
-                <p class="stats-info-title">{{this.title}}</p>
-                <p class="stats-info-genre">
-                    {{#each this.genres}}
-                    {{this.name}}
-                    {{/each}}
-                </p>
+                <div class="stats-info">
+                    <p class="stats-info-vote">
+                        <span class="stats-info-rating">{{vote_average}}</span> /
+                        <span class="stats-info-votes">{{vote_count}}</span>
+                    </p>
+                    <p class="stats-info-popularity">{{popularity}}</p>
+                    <p class="stats-info-title">{{title}}</p>
+                    <p class="stats-info-genre">
+                        {{#each this.genres}}
+                        {{this.name}}
+                        {{/each}}
+                    </p>
+                </div>
             </div>
-            <h3 class="about">About</h3>
-            <p class="film-description">{{this.overview}}</p>
-            <button class="btn-add-watched" data-action="add">Add to watched</button>
-            <button class="btn-add-queue" data-action="add">Add to queue</button>
+            <h3 class="movie-card-about-title">about</h3>
+            <p class="movie-card-about">{{overview}}</p>
+            <div class="btn-wrapper">
+                <button class="btn-add-watched" data-action="add">Add to watched</button>
+                <button class="btn-add-queue" data-action="add">Add to queue</button>
+            </div>
         </div>
     </div>
-    {{!--
-</div> --}}
+</div>

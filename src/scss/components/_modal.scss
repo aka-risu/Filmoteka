@@ -3,6 +3,16 @@
   top: 0;
 }
 
+.modal-open {
+  overflow: hidden;
+}
+
+.is-hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .overlay {
   position: fixed;
   display: flex;
@@ -13,17 +23,19 @@
   background: rgba(0, 0, 0, 0.7);
   z-index: 100;
 }
+
 .modal-window {
   /* overflow: hidden; */
   overflow: scroll;
   margin-right: auto;
   margin-left: auto;
-  text-align: center;
+  // text-align: center;
   width: 80vw;
   height: 100%;
-  padding-top: 250px;
+  padding-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 20px;
   /* width: 100%;
   display: block; */
   background-color: #fff;
@@ -31,17 +43,181 @@
   top: 0; */
   z-index: 2;
 }
-.modal-window img {
-  width: 100%;
-}
-.is-hidden {
-  display: none;
-  opacity: 0;
-  pointer-events: none;
-}
-.modal-open {
-  overflow: hidden;
-}
+
+// .modal-window img {
+//   width: 100%;
+// }
+
 // .footer-wrapper {
 //   position: relative;
 // }
+
+.movie-card-img {
+  height: 416px;
+  width: 280px;
+
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+}
+
+.movie-card-title {
+  display: none;
+}
+
+.stats-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+  // justify-content: center;
+}
+
+.stats-titles {
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.333;
+  color: #8c8c8c;
+  margin-right: auto;
+}
+
+.stats-titles > :not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.stats-info {
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.stats-info-vote {
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.333;
+  color: #8c8c8c;
+  margin-bottom: 10px;
+}
+
+.stats-info-rating {
+  display: inline-block;
+  width: 36px;
+  height: 16px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 5px;
+
+  background: $orange-color;
+  color: $white-color;
+  text-align: center;
+}
+
+.stats-info-votes {
+  display: inline-block;
+  width: 36px;
+  height: 16px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+  background: #f7f7f7;
+  border-radius: 5px;
+
+  color: $black-color;
+  text-align: center;
+}
+
+.stats-info > :not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.movie-card-about-title {
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.333;
+  text-transform: uppercase;
+
+  margin-bottom: 10px;
+}
+
+.movie-card-about {
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.67;
+
+  margin-bottom: 40px;
+}
+
+.btn-add-watched,
+.btn-add-queue {
+  height: 44px;
+  width: 136px;
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.333;
+  text-transform: uppercase;
+
+  color: $black-color;
+  background: $white-color;
+  border-radius: 5px;
+  border: 1px solid #8c8c8c;
+  outline: none;
+
+  @include transition(all);
+
+  cursor: pointer;
+  &:hover {
+    outline: none;
+    border: none;
+    background: $orange-slave-color;
+    color: $white-color;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-to-wached,
+  .btn-to-queue {
+    width: calc(50% - 5px);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .movie-card {
+    display: flex;
+  }
+  .movie-card-img {
+    margin-right: 30px;
+    height: 416px;
+    width: 294px;
+  }
+  .movie-card-title {
+    font-size: 30px;
+    line-height: 1.172;
+  }
+
+  .btn-to-wached {
+    margin-right: 15px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .movie-card-img {
+    height: 514px;
+    width: 426px;
+  }
+
+  .movie-card-about {
+    margin-bottom: 20px;
+  }
+
+  .btn-to-wached {
+    margin-right: 15px;
+  }
+}
