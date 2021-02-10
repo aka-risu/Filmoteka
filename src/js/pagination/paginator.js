@@ -76,7 +76,9 @@ export default class Pagination {
     currentPage = parseInt(currentPage);
 
     wrapper.innerHTML = '';
-
+    if (this.items.length === 0) {
+      return;
+    }
     if (pages <= 1) {
       let btn = paginationButton(currentPage, 1);
       wrapper.appendChild(btn);

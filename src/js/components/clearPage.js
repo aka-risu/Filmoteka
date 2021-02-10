@@ -6,6 +6,8 @@ function clearPage() {
   refs.movieListRef.innerHTML = '';
   refs.paginationRef.innerHTML = '';
   // refs.searchFormRef.elements.query.value = '';
+  refs.homeLinkRef.classList.remove('current');
+  refs.myLibraryLinkRef.classList.remove('current');
   refs.bodyRef.classList.remove('js-my-library-queue');
   refs.bodyRef.classList.remove('js-my-library-watched');
   hideErrorMessage();

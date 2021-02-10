@@ -6,9 +6,13 @@ import refs from './components/refs';
 
 export default function renderMainPage(event) {
   event.preventDefault();
+
   clearPage();
+  refs.homeLinkRef.classList.add('current');
+
   refs.headerRef.classList.add('header-bg-home');
   refs.headerRef.classList.remove('header-bg-lib');
+
   renderSearchForm();
   setPaginationMainOptions();
   renderTrendingMovies();

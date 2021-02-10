@@ -19,7 +19,7 @@ function renderMyLibrary(event) {
   refs.headerRef.classList.add('header-bg-lib');
   clearPage();
   setPaginationLibraryOptions();
-
+  event.target.classList.add('current');
   renderLibraryButtons();
 
   renderWatchedList();
