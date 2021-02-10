@@ -27,6 +27,7 @@
 
 .modal-window {
   /* overflow: hidden; */
+  position: relative;
   overflow: scroll;
   margin-right: auto;
   margin-left: auto;
@@ -53,6 +54,22 @@
 // .footer-wrapper {
 //   position: relative;
 // }
+
+.modal-close-btn {
+  background: url(./images/modal/btn-close.svg);
+  background-position: center;
+  position: absolute;
+  display: block;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border-color: $orange-color;
+  background-color: transparent;
+
+  // box-shadow: 6px 6px 9px rgba(255, 107, 8, 0.75);   //ужасная тень
+}
 
 .movie-card-img {
   // height: 416px;
@@ -183,6 +200,10 @@
     background: $orange-slave-color;
     color: $white-color;
   }
+}
+
+.btn-remove-watched,
+.btn-remove-queue {
 }
 
 // @media screen and (max-width: 767px) {
