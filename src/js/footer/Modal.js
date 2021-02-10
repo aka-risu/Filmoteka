@@ -2,8 +2,9 @@ export default class ModalWindow {
   constructor({ wrapper, content, button }) {
     this.refs = this.findRefs(wrapper);
     this.content = content;
-    this.createModal();
     this.button = button ? button : false;
+    this.createModal();
+
     // this.modal = this.refs.wrapper.querySelector('.modal');
   }
   findRefs = container => {
@@ -26,8 +27,9 @@ export default class ModalWindow {
           ${this.content}
           </div>
         </div>`;
+
     const modal = this.button ? contentWithBtn : content;
-    console.log(this.button);
+
     // console.log(this.refs.openRef);
     // this.refs.modalRef.classList.add('js-modal');
     this.refs.modalRef.insertAdjacentHTML('beforeend', modal);

@@ -125,6 +125,7 @@ export default class Pagination {
     }
 
     addLastButton(wrapper, currentPage, pages);
+
     addRightBtn(wrapper, pages);
 
     function addSeparator(wrapper) {

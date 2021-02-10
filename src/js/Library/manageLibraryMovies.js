@@ -2,7 +2,7 @@ import { myLibraryQueue, myLibraryWatched } from './myLibraryObj';
 import filmApiService from '../api/filmApiServiceObj';
 
 function manageMyLibraryMovie(event) {
-  if (event.target.dataset.action !== 'add') return;
+  if (event.target.dataset.type !== 'library-btn') return;
 
   localStorage.setItem(
     'moviesWatchedList',
@@ -17,7 +17,7 @@ function manageMyLibraryMovie(event) {
   const localWatchedMovies = localStorage.getItem('moviesWatchedList');
   myLibraryWatched.movies = JSON.parse(localWatchedMovies);
 
-  if (event.target.classList.value === 'btn-remove-watched') {
+  if (event.target.dataset.action === 'btn-remove-watched') {
     myLibraryWatched.deleteMovie(filmApiService.movieID);
     setLocalStorage('moviesWatchedList', myLibraryWatched);
     // localStorage.setItem(
@@ -25,7 +25,7 @@ function manageMyLibraryMovie(event) {
     //   JSON.stringify(myLibraryWatched.movies),
     // );
     handleButton(event, 'watched', 'add');
-  } else if (event.target.classList.value === 'btn-add-watched') {
+  } else if (event.target.dataset.action === 'btn-add-watched') {
     filmApiService.fetchMovieInfo().then(obj => {
       myLibraryWatched.addMovie(obj);
       setLocalStorage('moviesWatchedList', myLibraryWatched);
@@ -36,7 +36,7 @@ function manageMyLibraryMovie(event) {
       handleButton(event, 'watched', 'remove');
     });
   }
-  if (event.target.classList.value === 'btn-remove-queue') {
+  if (event.target.dataset.action === 'btn-remove-queue') {
     console.log(filmApiService.movieID);
     myLibraryQueue.deleteMovie(filmApiService.movieID);
     setLocalStorage('moviesQueueList', myLibraryQueue);
@@ -45,7 +45,7 @@ function manageMyLibraryMovie(event) {
     //   JSON.stringify(myLibraryQueue.movies),
     // );
     handleButton(event, 'queue', 'add');
-  } else if (event.target.classList.value === 'btn-add-queue') {
+  } else if (event.target.dataset.action === 'btn-add-queue') {
     filmApiService.fetchMovieInfo().then(obj => {
       myLibraryQueue.addMovie(obj);
       setLocalStorage('moviesQueueList', myLibraryQueue);
@@ -64,7 +64,9 @@ function setLocalStorage(name, array) {
 function handleButton(event, button, action) {
   const addAction = action === 'add' ? 'add' : 'remove';
   const removeAction = action === 'add' ? 'remove' : 'add';
-  event.target.textContent = `${addAction} from ${button}`;
+  const preposition = action === 'add' ? 'to' : 'from';
+  event.target.dataset.action = `btn-${addAction}-${button}`;
+  event.target.textContent = `${addAction} ${preposition} ${button}`;
   event.target.classList.remove(`btn-${removeAction}-${button}`);
   event.target.classList.add(`btn-${addAction}-${button}`);
 }
