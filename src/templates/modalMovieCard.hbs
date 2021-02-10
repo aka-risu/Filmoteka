@@ -1,5 +1,6 @@
 <div class="overlay">
     <div class="modal-window">
+        <button class="modal-close-btn" data-action="close-modal"></button>
         {{#if poster_path}}
         <img class="movie-card-img" src="https://image.tmdb.org/t/p/w300{{poster_path}}" alt="Film {{title}} poster" />
         {{else}}
@@ -32,8 +33,8 @@
             <h3 class="movie-card-about-title">about</h3>
             <p class="movie-card-about">{{overview}}</p>
             <div class="btn-wrapper">
-                <button class="btn-add-watched" data-action="add">Add to watched</button>
-                <button class="btn-add-queue" data-action="add">Add to queue</button>
+                <button class="btn btn-add-watched" data-action="add">Add to watched</button>
+                <button class="btn btn-add-queue" data-action="add">Add to queue</button>
             </div>
         </div>
     </div>

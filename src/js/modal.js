@@ -39,7 +39,11 @@ function handleClickOnMovie(event) {
 }
 
 function closeModal(event) {
-  if (event.target.classList.value === 'overlay' || event.keyCode === 27) {
+  if (
+    event.target.classList.value === 'overlay' ||
+    event.keyCode === 27 ||
+    event.target.dataset.action === 'close-modal'
+  ) {
     refs.modalRef.innerHTML = '';
     refs.modalRef.classList.add('is-hidden');
     refs.bodyRef.classList.remove('modal-open');
