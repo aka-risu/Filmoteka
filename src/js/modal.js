@@ -3,13 +3,13 @@ import filmApiService from './api/filmApiServiceObj';
 import modalMovieCard from '../templates/modalMovieCard.hbs';
 import renderWatchedList from './Library/renderMyLibrary';
 import { myLibraryQueue, myLibraryWatched } from '../js/Library/myLibraryObj';
-// import manageLibraryMovies from './Library/manageLibraryMovies';
+import manageLibraryMovies from './Library/manageLibraryMovies';
 
 refs.movieListRef.addEventListener('click', handleClickOnMovie);
-
+refs.modalRef.addEventListener('click', manageLibraryMovies);
 function handleClickOnMovie(event) {
   event.preventDefault();
-  // manageLibraryMovies(event);
+
   if (event.target.nodeName !== 'LI') return;
 
   filmApiService.movieID = event.target.id;

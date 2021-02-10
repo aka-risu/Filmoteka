@@ -1,56 +1,67 @@
-import 
+import { myLibraryQueue, myLibraryWatched } from './myLibraryObj';
+import filmApiService from '../api/filmApiServiceObj';
 
 function manageMyLibraryMovie(event) {
   if (event.target.dataset.action !== 'add') return;
 
+  //   localStorage.setItem(
+  //     'moviesWatchedList',
+  //     JSON.stringify(myLibraryWatched.movies),
+  //   );
+  const localQueueMovies = localStorage.getItem('moviesQueueList');
+  myLibraryQueue.movies = JSON.parse(localQueueMovies);
+  const localWatchedMovies = localStorage.getItem('moviesWatchedList');
+  myLibraryWatched.movies = JSON.parse(localWatchedMovies);
+
   if (event.target.classList.value === 'btn-remove-watched') {
-    console.log(filmApiService.movieID);
     myLibraryWatched.deleteMovie(filmApiService.movieID);
-
-    localStorage.setItem(
-      'moviesWatchedList',
-      JSON.stringify(myLibraryWatched.movies),
-    );
-
-    event.target.textContent = 'Add to watched';
-    event.target.classList.remove('btn-remove-watched');
-    event.target.classList.add('btn-add-watched');
+    setLocalStorage('moviesWatchedList', myLibraryWatched);
+    // localStorage.setItem(
+    //   'moviesWatchedList',
+    //   JSON.stringify(myLibraryWatched.movies),
+    // );
+    handleButton(event, 'watched', 'add');
   } else if (event.target.classList.value === 'btn-add-watched') {
     filmApiService.fetchMovieInfo().then(obj => {
       myLibraryWatched.addMovie(obj);
-      localStorage.setItem(
-        'moviesWatchedList',
-        JSON.stringify(myLibraryWatched.movies),
-      );
-
-      event.target.textContent = 'Remove from watched';
-      event.target.classList.remove('btn-add-watched');
-      event.target.classList.add('btn-remove-watched');
+      setLocalStorage('moviesWatchedList', myLibraryWatched);
+      //     localStorage.setItem(
+      //     'moviesWatchedList',
+      //     JSON.stringify(myLibraryWatched.movies),
+      //   );
+      handleButton(event, 'watched', 'remove');
     });
   }
   if (event.target.classList.value === 'btn-remove-queue') {
     console.log(filmApiService.movieID);
     myLibraryQueue.deleteMovie(filmApiService.movieID);
-
-    localStorage.setItem(
-      'moviesQueueList',
-      JSON.stringify(myLibraryQueue.movies),
-    );
-
-    event.target.textContent = 'Add to queue';
-    event.target.classList.remove('btn-remove-queue');
-    event.target.classList.add('btn-add-queue');
+    setLocalStorage('moviesQueueList', myLibraryQueue);
+    // localStorage.setItem(
+    //   'moviesQueueList',
+    //   JSON.stringify(myLibraryQueue.movies),
+    // );
+    handleButton(event, 'queue', 'add');
   } else if (event.target.classList.value === 'btn-add-queue') {
     filmApiService.fetchMovieInfo().then(obj => {
       myLibraryQueue.addMovie(obj);
-      localStorage.setItem(
-        'moviesQueueList',
-        JSON.stringify(myLibraryQueue.movies),
-      );
+      setLocalStorage('moviesQueueList', myLibraryQueue);
+      //   localStorage.setItem(
+      //     'moviesQueueList',
+      //     JSON.stringify(myLibraryQueue.movies),
+      //   );
 
-      event.target.textContent = 'Remove from queue';
-      event.target.classList.remove('btn-add-queue');
-      event.target.classList.add('btn-remove-queue');
+      handleButton(event, 'queue', 'remove');
     });
   }
 }
+function setLocalStorage(name, array) {
+  localStorage.setItem(name, JSON.stringify(array.movies));
+}
+function handleButton(event, button, action) {
+  const addAction = action === 'add' ? 'add' : 'remove';
+  const removeAction = action === 'add' ? 'remove' : 'add';
+  event.target.textContent = `${addAction} from ${button}`;
+  event.target.classList.remove(`btn-${removeAction}-${button}`);
+  event.target.classList.add(`btn-${addAction}-${button}`);
+}
+export default manageMyLibraryMovie;
