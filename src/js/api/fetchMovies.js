@@ -16,6 +16,7 @@ export default class FilmApiService {
     )
       .then(response => response.json())
       .then(object => {
+        // console.log(object);
         this.totalPages = 20;
         return object.results;
       })
@@ -30,7 +31,7 @@ export default class FilmApiService {
       .then(response => response.json())
       .then(obj => {
         // console.log(obj.total_pages)
-        // console.log(obj.results)
+        // console.log(obj.results);
         this.totalPages = obj.total_pages < 20 ? obj.total_pages : 20;
         console.log(this.totalPages);
         return obj.results;
