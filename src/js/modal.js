@@ -9,7 +9,7 @@ refs.movieListRef.addEventListener('click', handleClickOnMovie);
 refs.modalRef.addEventListener('click', manageLibraryMovies);
 function handleClickOnMovie(event) {
   event.preventDefault();
-
+  console.log(event.target);
   if (event.target.nodeName !== 'LI') return;
 
   filmApiService.movieID = event.target.id;
