@@ -94,17 +94,43 @@ export default class Pagination {
     let btnShown = 2;
     let start = 1;
     //buttonsShown = 5
-    start = currentPage <= 3 ? 2 : currentPage - 2;
+    start =
+      currentPage === pages
+        ? pages - 6
+        : currentPage === pages - 1
+        ? pages - 6
+        : currentPage === pages - 2
+        ? pages - 6
+        : currentPage === pages - 3
+        ? pages - 6
+        : currentPage <= 3
+        ? 2
+        : currentPage - 2;
 
     switch (currentPage) {
       case 1:
-        btnShown = 2;
+        btnShown = 6;
         break;
       case 2:
-        btnShown = 3;
+        btnShown = 6;
         break;
       case 3:
-        btnShown = 4;
+        btnShown = 6;
+        break;
+      case 4:
+        btnShown = 6;
+        break;
+      case pages:
+        btnShown = 7;
+        break;
+      case pages - 1:
+        btnShown = 6;
+        break;
+      case pages - 2:
+        btnShown = 6;
+        break;
+      case pages - 3:
+        btnShown = 6;
         break;
       default:
         btnShown = 5;
@@ -133,7 +159,17 @@ export default class Pagination {
     if (buttonsShown === 1) {
       start =
         currentPage === pages ? pages - 1 : currentPage <= 2 ? 2 : currentPage;
-      btnShown = 1;
+      switch (currentPage) {
+        case 1:
+          btnShown = 2;
+          break;
+        case 2:
+          btnShown = 2;
+          break;
+        default:
+          btnShown = 1;
+      }
+      // btnShown = 1;
       if (currentPage >= 3) {
         addSeparator(wrapper);
       }
