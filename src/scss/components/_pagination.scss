@@ -1,37 +1,39 @@
 .pagination {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
-.pagination button {
-  font-family: $main-font;
-
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.333;
-
-  align-items: center;
-
-  color: $black-color;
+.pagination * {
   border-color: transparent;
-  border-radius: 5px;
   width: 40px;
   height: 40px;
+  border-radius: 5px;
+}
+
+.pag-button {
+  background-color: transparent;
+}
+
+.pag-separator {
+  background-color: transparent;
 }
 
 .left-button {
-  background: url('./images/pagination/arrow-left.svg'); //убрать текст контент
+  background: url('./images/pagination/arrow-left.svg');
   background-color: #f7f7f7;
   background-position: 50%;
   background-repeat: no-repeat;
 }
 
 .right-button {
-  background: url('./images/pagination/arrow-right.svg'); //убрать текст контент
+  background: url('./images/pagination/arrow-right.svg');
   background-color: #f7f7f7;
   background-position: 50%;
   background-repeat: no-repeat;
 }
 
-.active {
+.pagination-active {
   background-color: $orange-color;
 }
