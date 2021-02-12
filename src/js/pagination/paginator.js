@@ -95,13 +95,10 @@ export default class Pagination {
     let start = 1;
     //buttonsShown = 5
     start =
-      currentPage === pages
-        ? pages - 6
-        : currentPage === pages - 1
-        ? pages - 6
-        : currentPage === pages - 2
-        ? pages - 6
-        : currentPage === pages - 3
+      currentPage === pages ||
+      currentPage === pages - 1 ||
+      currentPage === pages - 2 ||
+      currentPage === pages - 3
         ? pages - 6
         : currentPage <= 3
         ? 2
@@ -109,27 +106,13 @@ export default class Pagination {
 
     switch (currentPage) {
       case 1:
-        btnShown = 6;
-        break;
       case 2:
-        btnShown = 6;
-        break;
       case 3:
-        btnShown = 6;
-        break;
       case 4:
-        btnShown = 6;
-        break;
-      case pages:
-        btnShown = 7;
-        break;
       case pages - 1:
-        btnShown = 6;
-        break;
       case pages - 2:
-        btnShown = 6;
-        break;
       case pages - 3:
+      case pages:
         btnShown = 6;
         break;
       default:
@@ -140,15 +123,25 @@ export default class Pagination {
     }
     if (buttonsShown === 3) {
       //buttonsShown = 3
-      start = currentPage <= 3 ? 2 : currentPage - 1;
-      //buttonsShown = 3
+      start =
+        currentPage === pages ||
+        currentPage === pages - 1 ||
+        currentPage === pages - 2
+          ? pages - 4
+          : currentPage <= 3
+          ? 2
+          : currentPage - 1;
+
       switch (currentPage) {
         case 1:
-          btnShown = 2;
-          break;
         case 2:
-          btnShown = 2;
+        case 3:
+        case pages:
+        case pages - 1:
+        case pages - 2:
+          btnShown = 4;
           break;
+
         default:
           btnShown = 3;
       }
@@ -158,12 +151,16 @@ export default class Pagination {
     }
     if (buttonsShown === 1) {
       start =
-        currentPage === pages ? pages - 1 : currentPage <= 2 ? 2 : currentPage;
+        currentPage === pages || currentPage === pages - 1
+          ? pages - 2
+          : currentPage <= 2
+          ? 2
+          : currentPage;
       switch (currentPage) {
         case 1:
-          btnShown = 2;
-          break;
         case 2:
+        case pages:
+        case pages - 1:
           btnShown = 2;
           break;
         default:

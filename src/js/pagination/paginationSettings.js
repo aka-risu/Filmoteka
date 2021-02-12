@@ -8,9 +8,7 @@ function setPaginationLibraryOptions() {
   pagination.itemsOnPage = 3;
   pagination.currentPage = 1;
   pagination.template = libraryMovieCard;
-  if (checkScreenWidth() < 768) {
-    pagination.buttonsShown = 1;
-  }
+  setNumberOfPaginationButtons();
 }
 function setPaginationMainOptions() {
   pagination.fullArray = true;
@@ -18,9 +16,9 @@ function setPaginationMainOptions() {
   pagination.pages = 20;
   pagination.currentPage = 1;
   pagination.template = movieCard;
-  if (checkScreenWidth() < 768) {
-    pagination.buttonsShown = 1;
-  }
+  setNumberOfPaginationButtons();
 }
-
+function setNumberOfPaginationButtons() {
+  pagination.buttonsShown = checkScreenWidth() < 768 ? 3 : 5;
+}
 export { setPaginationLibraryOptions, setPaginationMainOptions };
