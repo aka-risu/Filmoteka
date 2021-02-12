@@ -76,9 +76,11 @@ export default class Pagination {
     currentPage = parseInt(currentPage);
 
     wrapper.innerHTML = '';
-    if (this.items.length === 0) {
+    if (items.length === 0) {
+      wrapper.insertAdjacentHTML('beforeend', 'Add some movies ^_^');
       return;
     }
+
     if (pages <= 1) {
       let btn = paginationButton(currentPage, 1);
       wrapper.appendChild(btn);
@@ -89,12 +91,10 @@ export default class Pagination {
     addLeftBtn(wrapper, pages);
     addFirstButton(currentPage, wrapper);
 
-    if (currentPage >= buttonsShown) {
-      addSeparator(wrapper);
-    }
-
-    let start = currentPage <= 3 ? 2 : currentPage - 2;
     let btnShown = 2;
+    let start = 1;
+    //buttonsShown = 5
+    start = currentPage <= 3 ? 2 : currentPage - 2;
 
     switch (currentPage) {
       case 1:
@@ -109,6 +109,35 @@ export default class Pagination {
       default:
         btnShown = 5;
     }
+    if (buttonsShown === 5 && currentPage >= 5) {
+      addSeparator(wrapper);
+    }
+    if (buttonsShown === 3) {
+      //buttonsShown = 3
+      start = currentPage <= 3 ? 2 : currentPage - 1;
+      //buttonsShown = 3
+      switch (currentPage) {
+        case 1:
+          btnShown = 2;
+          break;
+        case 2:
+          btnShown = 2;
+          break;
+        default:
+          btnShown = 3;
+      }
+      if (currentPage >= 4) {
+        addSeparator(wrapper);
+      }
+    }
+    if (buttonsShown === 1) {
+      start =
+        currentPage === pages ? pages - 1 : currentPage <= 2 ? 2 : currentPage;
+      btnShown = 1;
+      if (currentPage >= 3) {
+        addSeparator(wrapper);
+      }
+    }
 
     for (let j = 0; j < btnShown; j++) {
       if (start > pages - 1) {
@@ -121,8 +150,13 @@ export default class Pagination {
       btn.dataset.index = start;
       start++;
     }
-
-    if (currentPage <= pages - 4) {
+    if (buttonsShown === 1 && currentPage <= pages - 2) {
+      addSeparator(wrapper);
+    }
+    if (buttonsShown === 3 && currentPage <= pages - 3) {
+      addSeparator(wrapper);
+    }
+    if (buttonsShown === 5 && currentPage <= pages - 4) {
       addSeparator(wrapper);
     }
 

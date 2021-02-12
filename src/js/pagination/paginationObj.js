@@ -7,7 +7,7 @@ const paginationOptions = {
   template: movieCard,
   container: '.movies-list',
   paginationContainer: '.pagination',
-
+  buttonsShown: 5,
   fullArray: true,
 };
 export default new Pagination(paginationOptions);
