@@ -67,8 +67,6 @@
   border-radius: 50%;
   border-color: $orange-color;
   background-color: transparent;
-
-  // box-shadow: 6px 6px 9px rgba(255, 107, 8, 0.75);   //ужасная тень
 }
 
 .movie-card-img {
@@ -88,7 +86,6 @@
 .stats-wrapper {
   display: flex;
   margin-bottom: 20px;
-  // justify-content: center;
 }
 
 .stats-titles {
@@ -174,13 +171,12 @@
   justify-content: space-between;
 }
 
-.btn-add-watched,
-.btn-add-queue {
+.modal-btn {
   height: 44px;
   width: 117px;
   font-family: $main-font;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.333;
   text-transform: uppercase;
 
@@ -194,29 +190,64 @@
 
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     outline: none;
     border: none;
-    background: $orange-slave-color;
+    background-color: $orange-slave-color;
     color: $white-color;
   }
 }
 
 .btn-remove-watched,
 .btn-remove-queue {
+  background-color: #ff6b01;
+  color: $white-color;
 }
 
-// @media screen and (max-width: 767px) {
-//   .btn-wrapper {
-//     display: flex;
-//     justify-content: space-between;
-//   }
+@media screen and (min-width: 768px) {
+  .modal-window {
+    display: flex;
+    max-width: 690px;
+    max-height: 90vh;
+  }
 
-//   .btn-to-wached,
-//   .btn-to-queue {
-//     width: calc(50% - 5px);
-//   }
-// }
+  .movie-card-title {
+    display: block;
+    font-family: $main-font;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.667;
+    color: $black-color;
+    margin-bottom: 20px;
+  }
+
+  .movie-card-img {
+    height: 416px;
+    width: 294px;
+
+    border-radius: 5px;
+    margin-right: 30px;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  .stats-titles {
+    margin-right: 40px;
+  }
+
+  .modal-btn {
+    width: 136px;
+    font-size: 12px;
+  }
+
+  .movie-card-about {
+    margin-bottom: 0;
+  }
+
+  .btn-about-wrapper {
+  }
+}
 
 // @media screen and (min-width: 768px) {
 //   .movie-card {
