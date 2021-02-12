@@ -167,6 +167,7 @@ export default class Pagination {
     function addSeparator(wrapper) {
       let dots = document.createElement('button');
       dots.innerText = '...';
+      dots.classList.add('pag-separator');
       wrapper.appendChild(dots);
       dots.disabled = true;
     }
@@ -193,8 +194,9 @@ export default class Pagination {
     function paginationButton(currentPage, page) {
       let button = document.createElement('button');
       button.innerText = page;
+      button.classList.add('pag-button');
       if (currentPage === page) {
-        button.classList.add('active');
+        button.classList.add('pagination-active');
       }
       return button;
     }

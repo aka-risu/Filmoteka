@@ -1,4 +1,7 @@
 import getGenres from './getGenres';
+import addLoader from '../../loader/loader';
+import refs from '../components/refs';
+
 const API_KEY = '599b2da5737417d6d547b02cdbe7d5e8';
 
 export default class FilmApiService {
@@ -10,17 +13,22 @@ export default class FilmApiService {
   }
 
   fetchTrendingMovies(page) {
+    addLoader();
     this.page = page;
-    return fetch(
-      `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&page=${this.page}`,
-    )
-      .then(response => response.json())
-      .then(object => {
-        // console.log(object);
-        this.totalPages = 20;
-        return object.results;
-      })
-      .then(array => getGenres(array));
+    return (
+      fetch(
+        `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&page=${this.page}`,
+      )
+        // .then(addLoader())
+        .then(response => response.json())
+        .then(object => {
+          // console.log(object);
+          this.totalPages = 20;
+          return object.results;
+        })
+        .then(array => getGenres(array))
+        .then((refs.loaderRef.innerHTML = ''))
+    );
   }
 
   fetchMovieByWord(page) {
