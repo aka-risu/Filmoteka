@@ -17,5 +17,6 @@ const refs = {
   btnsMyLibrary: document.querySelector('.my-library-buttons'),
   btnAddWatched: document.querySelector('.btn-add-watched'),
   btnAddQueue: document.querySelector('.btn-add-queue'),
+  loaderRef: document.querySelector('.loader'),
 };
 export default refs;
