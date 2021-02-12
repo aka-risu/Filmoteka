@@ -21,12 +21,14 @@ function handleClickOnMovie(event) {
       console.log('Hey');
       const btnWatched = document.querySelector('.btn-add-watched');
       btnWatched.textContent = 'Remove from watched';
+      btnWatched.dataset.action = 'btn-remove-watched';
       btnWatched.classList.remove('btn-add-watched');
       btnWatched.classList.add('btn-remove-watched');
     }
     if (myLibraryQueue.findMovie(obj.id)) {
       const btnWatched = document.querySelector('.btn-add-queue');
       btnWatched.textContent = 'Remove from queue';
+      btnWatched.dataset.action = 'btn-remove-queue';
       btnWatched.classList.remove('btn-add-queue');
       btnWatched.classList.add('btn-remove-queue');
     }

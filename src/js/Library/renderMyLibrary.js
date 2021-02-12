@@ -21,16 +21,38 @@ function renderMyLibrary(event) {
   setPaginationLibraryOptions();
   event.target.classList.add('current');
   renderLibraryButtons();
-
+  localStorage.setItem(
+    'moviesWatchedList',
+    JSON.stringify(myLibraryWatched.movies),
+  );
+  localStorage.setItem(
+    'moviesQueueList',
+    JSON.stringify(myLibraryQueue.movies),
+  );
   renderWatchedList();
+
+  const btnWatched = refs.btnsMyLibrary.querySelector('[btn-watched]');
+  const btnQueue = refs.btnsMyLibrary.querySelector('[btn-queue]');
 }
 
 function renderMyLibraryList(event) {
-  if (event.target.classList.value === 'btn-watched') {
+  if (event.target.dataset.type === 'btn-watched') {
+    event.target.classList.add('current-btn-library');
+    const btnQueue = refs.btnsMyLibrary.querySelector(
+      '[data-type="btn-queue"]',
+    );
+    console.log(btnQueue);
+    btnQueue.classList.remove('current-btn-library');
     pagination.currentPage = 1;
     renderWatchedList();
   }
-  if (event.target.classList.value === 'btn-queue') {
+
+  if (event.target.dataset.type === 'btn-queue') {
+    event.target.classList.add('current-btn-library');
+    const btnWatched = refs.btnsMyLibrary.querySelector(
+      '[data-type="btn-watched"]',
+    );
+    btnWatched.classList.remove('current-btn-library');
     pagination.currentPage = 1;
     renderQueueList();
   }
