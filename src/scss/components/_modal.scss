@@ -126,6 +126,15 @@
   text-align: center;
 }
 
+.stats-info-genres {
+  display: flex;
+}
+
+.stats-info-genre:not(:last-child)::after {
+  content: ',';
+  margin-right: 4px;
+}
+
 .stats-info > :not(:last-child) {
   margin-bottom: 10px;
 }

@@ -132,6 +132,14 @@
     width: 205px;
   }
 
+  .movie-date {
+    margin-right: 5px;
+  }
+
+  .movie-rating {
+    width: 30px;
+  }
+
   .movie-card:not(:nth-child(4n + 4)) {
     margin-right: 20px;
   }
