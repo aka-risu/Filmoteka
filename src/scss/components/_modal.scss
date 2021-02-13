@@ -5,7 +5,6 @@
 
 .modal-open {
   overflow: hidden;
-  // width: 280px;
 }
 
 .is-hidden {
@@ -26,34 +25,17 @@
 }
 
 .modal-window {
-  /* overflow: hidden; */
   position: relative;
   overflow: scroll;
   margin-right: auto;
   margin-left: auto;
-  // text-align: center;
   max-width: 280px;
   max-height: 90vh;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
-  /* width: 100%;
-  display: block; */
+  padding: 20px;
   background-color: #fff;
   border-radius: 5px;
-  /* position: absolute;
-  top: 0; */
   z-index: 2;
 }
-
-// .modal-window img {
-//   width: 100%;
-// }
-
-// .footer-wrapper {
-//   position: relative;
-// }
 
 .modal-close-btn {
   background: url(./images/modal/btn-close.svg);
@@ -70,9 +52,7 @@
 }
 
 .movie-card-img {
-  // height: 416px;
   width: 280px;
-
   border-radius: 5px;
   margin-left: auto;
   margin-right: auto;
@@ -192,10 +172,7 @@
 
   &:hover,
   &:focus {
-    outline: none;
-    border: none;
-    background-color: $orange-slave-color;
-    color: $white-color;
+    transform: scale(1.15);
   }
 }
 
@@ -207,9 +184,10 @@
 
 @media screen and (min-width: 768px) {
   .modal-window {
+    overflow: hidden;
     display: flex;
     max-width: 690px;
-    max-height: 90vh;
+    max-height: 460px;
   }
 
   .movie-card-title {
@@ -242,42 +220,30 @@
   }
 
   .movie-card-about {
-    margin-bottom: 0;
+    margin-bottom: 20px;
   }
 
-  .btn-about-wrapper {
+  .btn-wrapper {
+    justify-content: left;
+  }
+
+  .modal-btn {
+    margin-right: 15px;
   }
 }
 
-// @media screen and (min-width: 768px) {
-//   .movie-card {
-//     display: flex;
-//   }
-//   .movie-card-img {
-//     margin-right: 30px;
-//     height: 416px;
-//     width: 294px;
-//   }
-//   .movie-card-title {
-//     font-size: 30px;
-//     line-height: 1.172;
-//   }
+@media screen and (min-width: 1024px) {
+  .modal-window {
+    max-width: 850px;
+    max-height: 557px;
+  }
 
-//   .btn-to-wached {
-//     margin-right: 15px;
-//   }
-// }
-// @media screen and (min-width: 1024px) {
-//   .movie-card-img {
-//     height: 514px;
-//     width: 426px;
-//   }
+  .movie-card-img {
+    height: 514px;
+    width: 426px;
+  }
 
-//   .movie-card-about {
-//     margin-bottom: 20px;
-//   }
-
-//   .btn-to-wached {
-//     margin-right: 15px;
-//   }
-// }
+  .stats-titles {
+    margin-right: 85px;
+  }
+}
