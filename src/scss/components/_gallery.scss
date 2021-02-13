@@ -3,10 +3,20 @@
   padding-bottom: 40px;
 }
 
+.movie-card {
+  cursor: pointer;
+}
+
+.movie-card:hover .movie-img {
+  transform: scale(1.07);
+  @include transition(transform);
+}
+
 .movie-img,
 .movie-title,
 .card-wrapper {
   pointer-events: none;
+  @include transition(transform);
 }
 
 .movie-img {
@@ -111,15 +121,6 @@
   .movie-card {
     width: 205px;
   }
-
-  // .movie-title {
-  //   font-size: 10px;
-  // }
-
-  // .movie-genre,
-  // .movie-date {
-  //   font-size: 10px;
-  // }
 
   .movie-card:not(:nth-child(4n + 4)) {
     margin-right: 20px;
