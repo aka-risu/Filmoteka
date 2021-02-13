@@ -10,6 +10,6 @@ function clearPage() {
   refs.myLibraryLinkRef.classList.remove('current');
   refs.bodyRef.classList.remove('js-my-library-queue');
   refs.bodyRef.classList.remove('js-my-library-watched');
-  hideErrorMessage();
+  // hideErrorMessage();
 }
 export default clearPage;

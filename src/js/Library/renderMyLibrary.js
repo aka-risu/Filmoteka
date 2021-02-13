@@ -13,7 +13,7 @@ refs.btnsMyLibrary.addEventListener('click', renderMyLibraryList);
 
 function renderMyLibrary(event) {
   event.preventDefault();
-  hideErrorMessage();
+  // hideErrorMessage();
   refs.bodyRef.classList.add('js-my-library-watched');
   refs.headerRef.classList.remove('header-bg-home');
   refs.headerRef.classList.add('header-bg-lib');
@@ -21,18 +21,19 @@ function renderMyLibrary(event) {
   setPaginationLibraryOptions();
   event.target.classList.add('current');
   renderLibraryButtons();
-  localStorage.setItem(
-    'moviesWatchedList',
-    JSON.stringify(myLibraryWatched.movies),
-  );
-  localStorage.setItem(
-    'moviesQueueList',
-    JSON.stringify(myLibraryQueue.movies),
-  );
+  if (!localStorage.getItem('moviesWatchedList')) {
+    localStorage.setItem(
+      'moviesWatchedList',
+      JSON.stringify(myLibraryWatched.movies),
+    );
+  }
+  if (!localStorage.getItem('moviesQueueList')) {
+    localStorage.setItem(
+      'moviesQueueList',
+      JSON.stringify(myLibraryQueue.movies),
+    );
+  }
   renderWatchedList();
-
-  const btnWatched = refs.btnsMyLibrary.querySelector('[btn-watched]');
-  const btnQueue = refs.btnsMyLibrary.querySelector('[btn-queue]');
 }
 
 function renderMyLibraryList(event) {

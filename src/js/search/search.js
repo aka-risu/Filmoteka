@@ -22,7 +22,9 @@ function renderMovieSearch() {
 
   filmApiService.fetchMovieByWord(page).then(array => {
     if (array.length === 0) {
+      console.log('bebe');
       showErrorMessage();
+      console.log('bebe');
       return;
     }
     hideErrorMessage();
