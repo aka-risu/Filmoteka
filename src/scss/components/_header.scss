@@ -5,7 +5,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 46px;
-  padding-bottom: 155px;
+  padding-bottom: 154px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -56,6 +56,12 @@
 .navigation-my-library-link {
   color: $white-color;
   position: relative;
+  @include transition(all);
+
+  &:hover {
+    transform: scale(1.1);
+    @include transition(all);
+  }
 }
 
 .current:after {
@@ -69,7 +75,7 @@
 
 .search-form {
   position: absolute;
-  top: 120px;
+  top: 130px;
 }
 
 .search-input {
@@ -111,7 +117,7 @@
 .my-library-buttons {
   display: inline-flex;
   position: absolute;
-  top: 140px;
+  top: 145px;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -159,20 +165,14 @@
   border: 1px solid transparent;
 }
 
-@media screen and (max-width: 320px) {
-}
-
 @media screen and (min-width: 768px) {
-  .header {
-    padding-bottom: 135px;
-  }
-  .heder-bg-home {
+  .header-bg-home {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/header/Header-tablet-home.jpg);
     background-color: #000;
   }
 
-  .heder-bg-lib {
+  .header-bg-lib {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/header/Header-tablet-my-library.jpg);
     background-color: #000;
@@ -189,6 +189,13 @@
 
   .navigation-logo-icon {
     margin-right: 10px;
+    @include transition(all);
+
+    &:hover {
+      transform: scale(1.2);
+
+      @include transition(all);
+    }
   }
 
   .navigation-logo-text {
@@ -204,20 +211,21 @@
     left: 50%;
     transform: translatex(-50%);
   }
-
-  .my-library-buttons {
-    top: 140px;
-  }
 }
 
 @media screen and (min-width: 1024px) {
-  .heder-bg-home {
+  .header {
+    margin: 0 auto;
+    width: 1024px;
+  }
+
+  .header-bg-home {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/header/Header-desktop-home.jpg);
     background-color: #000;
   }
 
-  .heder-bg-lib {
+  .header-bg-lib {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/header/Header-desktop-my-library.jpg);
     background-color: #000;
