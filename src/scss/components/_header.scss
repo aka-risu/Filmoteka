@@ -56,9 +56,11 @@
 .navigation-my-library-link {
   color: $white-color;
   position: relative;
+  @include transition(all);
 
   &:hover {
     transform: scale(1.1);
+    @include transition(all);
   }
 }
 
@@ -187,9 +189,12 @@
 
   .navigation-logo-icon {
     margin-right: 10px;
+    @include transition(all);
 
     &:hover {
       transform: scale(1.2);
+
+      @include transition(all);
     }
   }
 
