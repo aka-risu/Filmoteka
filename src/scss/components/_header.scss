@@ -56,6 +56,10 @@
 .navigation-my-library-link {
   color: $white-color;
   position: relative;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .current:after {
@@ -183,6 +187,10 @@
 
   .navigation-logo-icon {
     margin-right: 10px;
+
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 
   .navigation-logo-text {
