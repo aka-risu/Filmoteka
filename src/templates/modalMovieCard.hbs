@@ -23,11 +23,11 @@
                     </p>
                     <p class="stats-info-popularity">{{popularity}}</p>
                     <p class="stats-info-title">{{title}}</p>
-                    <p class="stats-info-genre">
+                    <ul class="stats-info-genres">
                         {{#each this.genres}}
-                        {{this.name}}
+                        <li class="stats-info-genre">{{this}}</li>
                         {{/each}}
-                    </p>
+                        </>
                 </div>
             </div>
             <h3 class="movie-card-about-title">about</h3>
