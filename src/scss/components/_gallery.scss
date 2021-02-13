@@ -38,6 +38,7 @@
 
 .card-wrapper {
   display: flex;
+  align-items: baseline;
 }
 
 .movie-genres {
@@ -66,6 +67,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.333;
+  margin-right: 10px;
 
   color: $orange-color;
   &::before {
@@ -73,6 +75,19 @@
     margin-right: 3px;
     margin-left: 3px;
   }
+}
+
+.movie-rating {
+  font-family: $main-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #ffffff;
+  background-color: #ff6b01;
+  width: 36px;
+  height: 18px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 @media screen and (max-width: 767px) {
