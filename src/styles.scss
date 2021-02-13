@@ -3,11 +3,8 @@
 @import './scss/components/container';
 @import './scss/components/header';
 @import './scss/components/gallery';
+@import './scss/components/loader';
 @import './scss/components/pagination';
 @import './scss/components/modal';
 @import './scss/components/footer.scss';
 @import './scss/components/spinner';
-.modal-window {
-  width: 100%;
-  height: 100%;
-}
