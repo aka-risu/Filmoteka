@@ -1,11 +1,12 @@
 import Modal from './Modal';
+import puzzle from '../puzzle/puzzle';
+
 const options = {
   wrapper: '.modal-footer',
-  content: 'Hello',
+  content: '',
   button: true,
+  onOpen: puzzle,
 };
 const footerModal = new Modal(options);
-
-// footerModal.createModal();
 
 export default footerModal;

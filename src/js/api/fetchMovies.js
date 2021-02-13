@@ -14,6 +14,7 @@ export default class FilmApiService {
   }
 
   fetchTrendingMovies(page) {
+    this.clearLoader();
     addLoader();
     this.page = page;
     return (
@@ -39,6 +40,7 @@ export default class FilmApiService {
   }
 
   fetchMovieByWord(page) {
+    this.clearLoader();
     addLoader();
     this.page = page;
     return fetch(
@@ -60,6 +62,7 @@ export default class FilmApiService {
       });
   }
   fetchMovieInfo() {
+    this.clearLoader();
     addLoader();
     return fetch(
       `https://api.themoviedb.org/3/movie/${this.movieID}?api_key=${API_KEY}&language=en-US`,
