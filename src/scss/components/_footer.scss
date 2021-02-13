@@ -9,11 +9,12 @@
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-  color: #545454;
+  color: $footer-text-color;
   margin-bottom: 9px;
 
   margin-top: 0;
 }
+
 .footer-dev {
   font-family: $main-font;
   font-style: normal;
@@ -30,10 +31,10 @@
   cursor: pointer;
 }
 
-.footer-students::before {
+.footer-dev-by::after {
   display: inline-block;
   content: '';
-  background-image: url('./images/heart.svg');
+  background-image: url('./images/footer/heart.svg');
   height: 12.75px;
   width: 14px;
   margin-right: 10px;
@@ -46,7 +47,7 @@
   content: '';
   background-color: $footer-text-color;
   height: 1px;
-  width: 71%;
+  width: 100%;
   right: 0;
   bottom: 0;
 }
@@ -65,4 +66,8 @@
   }
 }
 @media screen and (min-width: 1024px) {
+  .footer {
+    margin: 0 auto;
+    width: 1024px;
+  }
 }
