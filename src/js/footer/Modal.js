@@ -1,10 +1,12 @@
+import puzzle from '../puzzle/puzzle';
 export default class ModalWindow {
-  constructor({ wrapper, content, button }) {
+  constructor({ wrapper, content, button, onOpen, onClose }) {
     this.refs = this.findRefs(wrapper);
     this.content = content;
     this.button = button ? button : false;
     this.createModal();
-
+    this.onOpen = onOpen;
+    this.onClose = onClose;
     // this.modal = this.refs.wrapper.querySelector('.modal');
   }
   findRefs = container => {
@@ -42,6 +44,9 @@ export default class ModalWindow {
     this.refs.bodyRef.classList.add('modal-open');
     window.addEventListener('click', this.closeModal.bind(this));
     window.addEventListener('keyup', this.closeModal.bind(this));
+
+    const mod = this.refs.modalRef.querySelector('.modal-window');
+    if (this.onOpen) this.onOpen(mod);
   }
 
   closeModal(event) {
@@ -55,6 +60,8 @@ export default class ModalWindow {
       this.refs.bodyRef.classList.remove('modal-open');
       window.removeEventListener('click', this.closeModal);
       window.removeEventListener('keyup', this.closeModal);
+
+      if (this.onClose) this.onClose();
     }
   }
 }
