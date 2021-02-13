@@ -1,3 +1,4 @@
+import fallbackImg from '../../images/gallery/fallback.png';
 export default function getGenres(array) {
   const API_KEY = '599b2da5737417d6d547b02cdbe7d5e8';
 
@@ -18,7 +19,7 @@ export default function getGenres(array) {
       // console.log(genres)
       return array.map(function (obj, index) {
         obj.genres = genres[index];
-
+        obj.fallback = fallbackImg;
         obj.release = parseInt(obj.release_date);
         return obj;
       });

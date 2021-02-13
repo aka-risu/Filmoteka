@@ -1,6 +1,7 @@
 import getGenres from './getGenres';
 import addLoader from '../../loader/loader';
 import refs from '../components/refs';
+import fallbackImg from '../../images/gallery/fallback.png';
 
 const API_KEY = '599b2da5737417d6d547b02cdbe7d5e8';
 
@@ -66,6 +67,7 @@ export default class FilmApiService {
       .then(response => response.json())
       .then(obj => {
         obj.release = parseInt(obj.release_date);
+        obj.fallback = fallbackImg;
         // console.log(obj.total_pages)
         // console.log(this.totalPages)
         this.clearLoader();
