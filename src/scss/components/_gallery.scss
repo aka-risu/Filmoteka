@@ -12,9 +12,7 @@
 .movie-img {
   width: 280px;
   height: 402px;
-
   border-radius: 5px;
-
   margin-bottom: 10px;
 }
 
@@ -22,11 +20,9 @@
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-  line-height: 1.667;
+  line-height: 1.333;
   text-transform: uppercase;
-
   color: $black-color;
-
   margin-bottom: 6px;
 }
 
@@ -43,20 +39,15 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.333;
-
   color: $orange-color;
-
-  &:not(:last-child)::after {
-    content: ',';
-    margin-right: 3px;
-  }
-
-  &:last-child {
-    margin-right: 3px;
-  }
 
   &:not(:nth-child(-n + 2)) {
     display: none;
+  }
+
+  &:nth-child(-n + 1)::after {
+    content: ',';
+    margin-right: 3px;
   }
 }
 
@@ -70,6 +61,7 @@
   &::before {
     content: '|';
     margin-right: 3px;
+    margin-left: 3px;
   }
 }
 
@@ -88,6 +80,10 @@
   .movie-img {
     width: 293px;
     height: 398px;
+  }
+
+  .movie-card {
+    width: 293px;
   }
 }
 
