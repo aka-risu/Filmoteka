@@ -1,5 +1,5 @@
 import pagination from './paginationObj';
-import libraryMovieCard from '../../templates/myLibraryMovie.hbs';
+// import libraryMovieCard from '../../templates/myLibraryMovie.hbs';
 import movieCard from '../../templates/movieCard.hbs';
 import checkScreenWidth from '../components/checkScreenWidth';
 
@@ -7,7 +7,7 @@ function setPaginationLibraryOptions() {
   pagination.fullArray = false;
   pagination.itemsOnPage = 3;
   pagination.currentPage = 1;
-  pagination.template = libraryMovieCard;
+  pagination.template = movieCard;
   setNumberOfPaginationButtons();
 }
 function setPaginationMainOptions() {

@@ -71,6 +71,9 @@ export default class FilmApiService {
       .then(obj => {
         obj.release = parseInt(obj.release_date);
         obj.fallback = fallbackImg;
+        // console.log(obj);
+        obj.genres = obj.genres.map(el => el.name);
+        // console.log(obj.genres);
         // console.log(obj.total_pages)
         // console.log(this.totalPages)
         this.clearLoader();
