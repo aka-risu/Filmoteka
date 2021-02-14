@@ -1,5 +1,6 @@
 .movie-card {
   cursor: pointer;
+  height: 466px;
 }
 
 .movie-card:hover .movie-img {
@@ -15,8 +16,8 @@
 }
 
 .movie-img {
-  width: 280px;
-  height: 402px;
+  // width: 280px;
+  // height: 402px;
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -92,21 +93,20 @@
 }
 
 @media screen and (min-width: 768px) {
+  .movie-card {
+    height: 462px;
+  }
+
   .movies-list {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 50px;
   }
 
-  .movie-img {
-    width: 293px;
-    height: 398px;
-  }
-
-  .gellery {
-    padding-top: 60px;
-    padding-bottom: 60px;
-  }
+  // .movie-img {
+  //   width: 293px;
+  //   height: 398px;
+  // }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -123,21 +123,30 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .movie-img {
-    width: 205px;
-    height: 308px;
-  }
+  // .movie-img {
+  //   width: 205px;
+  //   height: 308px;
+  // }
 
   .movie-card {
     width: 205px;
+    height: 368px;
+  }
+
+  .movie-genre {
+    font-size: 10px;
   }
 
   .movie-date {
     margin-right: 5px;
+    font-size: 10px;
   }
 
   .movie-rating {
     width: 30px;
+    height: 14px;
+    line-height: 1.55;
+    font-size: 10px;
   }
 
   .movie-card:not(:nth-child(4n + 4)) {
