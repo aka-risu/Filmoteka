@@ -88,7 +88,7 @@ export default class Pagination {
       return;
     }
 
-    addLeftBtn(wrapper, pages);
+    addLeftBtn(wrapper, pages, currentPage);
     addFirstButton(currentPage, wrapper);
 
     let btnShown = 2;
@@ -118,7 +118,7 @@ export default class Pagination {
       default:
         btnShown = 5;
     }
-    if (buttonsShown === 5 && currentPage >= 5) {
+    if (buttonsShown === 5 && currentPage >= 5 && pages >= 9) {
       addSeparator(wrapper);
     }
     if (buttonsShown === 3) {
@@ -167,11 +167,15 @@ export default class Pagination {
           btnShown = 1;
       }
       // btnShown = 1;
+
       if (currentPage >= 3) {
         addSeparator(wrapper);
       }
     }
-
+    if (pages <= 8) {
+      start = 2;
+      btnShown = 6;
+    }
     for (let j = 0; j < btnShown; j++) {
       if (start > pages - 1) {
         break;
@@ -189,13 +193,13 @@ export default class Pagination {
     if (buttonsShown === 3 && currentPage <= pages - 3) {
       addSeparator(wrapper);
     }
-    if (buttonsShown === 5 && currentPage <= pages - 4) {
+    if (buttonsShown === 5 && currentPage <= pages - 4 && pages >= 9) {
       addSeparator(wrapper);
     }
 
     addLastButton(wrapper, currentPage, pages);
 
-    addRightBtn(wrapper, pages);
+    addRightBtn(wrapper, pages, currentPage);
 
     function addSeparator(wrapper) {
       let dots = document.createElement('button');
@@ -204,13 +208,13 @@ export default class Pagination {
       wrapper.appendChild(dots);
       dots.disabled = true;
     }
-    function addLeftBtn(wrapper, pages) {
-      if (pages > 5) {
+    function addLeftBtn(wrapper, pages, currentPage) {
+      if (pages > 8 && currentPage !== 1) {
         navigationButton(wrapper, '', 'left');
       }
     }
-    function addRightBtn(wrapper, pages) {
-      if (pages > 5) {
+    function addRightBtn(wrapper, pages, currentPage) {
+      if (pages > 8 && currentPage !== pages) {
         navigationButton(wrapper, '', 'right');
       }
     }

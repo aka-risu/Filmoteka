@@ -5,7 +5,7 @@ import checkScreenWidth from '../components/checkScreenWidth';
 
 function setPaginationLibraryOptions() {
   pagination.fullArray = false;
-  pagination.itemsOnPage = 3;
+  pagination.itemsOnPage = 4;
   pagination.currentPage = 1;
   pagination.template = movieCard;
   setNumberOfPaginationButtons();
@@ -13,7 +13,7 @@ function setPaginationLibraryOptions() {
 function setPaginationMainOptions() {
   pagination.fullArray = true;
   pagination.itemsOnPage = '';
-  pagination.pages = 20;
+  pagination.pages = 9;
   pagination.currentPage = 1;
   pagination.template = movieCard;
   setNumberOfPaginationButtons();

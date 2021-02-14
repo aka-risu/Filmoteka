@@ -20,7 +20,7 @@ export default function getGenres(array) {
       return array.map(function (obj, index) {
         obj.genres = genres[index];
         obj.fallback = fallbackImg;
-        obj.release = parseInt(obj.release_date);
+        obj.release = obj.release_date ? parseInt(obj.release_date) : null;
         return obj;
       });
       // .obj.genres.slice(0, 1);;
