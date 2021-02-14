@@ -221,14 +221,10 @@ export default class Pagination {
       dots.disabled = true;
     }
     function addLeftBtn(wrapper, pages, currentPage) {
-      if (currentPage !== 1) {
-        navigationButton(wrapper, '', 'left');
-      }
+      navigationButton(wrapper, '', 'left', currentPage, pages);
     }
     function addRightBtn(wrapper, pages, currentPage) {
-      if (currentPage !== pages) {
-        navigationButton(wrapper, '', 'right');
-      }
+      navigationButton(wrapper, '', 'right', currentPage, pages);
     }
     function addLastButton(wrapper, currentPage, pages) {
       let lastBtn = paginationButton(currentPage, pages);
@@ -249,9 +245,15 @@ export default class Pagination {
       }
       return button;
     }
-    function navigationButton(wrapper, text, type) {
+    function navigationButton(wrapper, text, type, currentPage, pages) {
       let navButton = document.createElement('button');
       navButton.innerText = text;
+      if (currentPage === 1 && type === 'left') {
+        navButton.style = 'opacity:0';
+      }
+      if (currentPage === pages && type === 'right') {
+        navButton.style = 'opacity:0';
+      }
       wrapper.appendChild(navButton);
       navButton.classList.add(`${type}-button`);
     }
