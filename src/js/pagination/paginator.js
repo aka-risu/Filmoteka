@@ -118,9 +118,14 @@ export default class Pagination {
       default:
         btnShown = 5;
     }
+    if (pages <= 8) {
+      start = 2;
+      btnShown = 6;
+    }
     if (buttonsShown === 5 && currentPage >= 5 && pages >= 9) {
       addSeparator(wrapper);
     }
+
     if (buttonsShown === 3) {
       //buttonsShown = 3
       start =
@@ -145,8 +150,12 @@ export default class Pagination {
         default:
           btnShown = 3;
       }
-      if (currentPage >= 4) {
+      if (currentPage >= 4 && pages >= 7) {
         addSeparator(wrapper);
+      }
+      if (pages <= 6) {
+        start = 2;
+        btnShown = 4;
       }
     }
     if (buttonsShown === 1) {
@@ -167,15 +176,18 @@ export default class Pagination {
           btnShown = 1;
       }
       // btnShown = 1;
-
-      if (currentPage >= 3) {
+      if (pages <= 4) {
+        start = 2;
+        btnShown = 2;
+      }
+      if (currentPage >= 3 && pages >= 5) {
         addSeparator(wrapper);
       }
     }
-    if (pages <= 8) {
-      start = 2;
-      btnShown = 6;
-    }
+    // if (pages <= 8) {
+    //   start = 2;
+    //   btnShown = 6;
+    // }
     for (let j = 0; j < btnShown; j++) {
       if (start > pages - 1) {
         break;
@@ -187,10 +199,10 @@ export default class Pagination {
       btn.dataset.index = start;
       start++;
     }
-    if (buttonsShown === 1 && currentPage <= pages - 2) {
+    if (buttonsShown === 1 && currentPage <= pages - 2 && pages >= 5) {
       addSeparator(wrapper);
     }
-    if (buttonsShown === 3 && currentPage <= pages - 3) {
+    if (buttonsShown === 3 && currentPage <= pages - 3 && pages >= 7) {
       addSeparator(wrapper);
     }
     if (buttonsShown === 5 && currentPage <= pages - 4 && pages >= 9) {
@@ -209,12 +221,12 @@ export default class Pagination {
       dots.disabled = true;
     }
     function addLeftBtn(wrapper, pages, currentPage) {
-      if (pages > 8 && currentPage !== 1) {
+      if (currentPage !== 1) {
         navigationButton(wrapper, '', 'left');
       }
     }
     function addRightBtn(wrapper, pages, currentPage) {
-      if (pages > 8 && currentPage !== pages) {
+      if (currentPage !== pages) {
         navigationButton(wrapper, '', 'right');
       }
     }

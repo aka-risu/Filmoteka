@@ -13,7 +13,7 @@ function setPaginationLibraryOptions() {
 function setPaginationMainOptions() {
   pagination.fullArray = true;
   pagination.itemsOnPage = '';
-  pagination.pages = 9;
+  pagination.pages = 20;
   pagination.currentPage = 1;
   pagination.template = movieCard;
   setNumberOfPaginationButtons();
