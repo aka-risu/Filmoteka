@@ -1,5 +1,6 @@
 .movie-card {
   cursor: pointer;
+  height: 466px;
 }
 
 .movie-card:hover .movie-img {
@@ -92,6 +93,9 @@
 }
 
 @media screen and (min-width: 768px) {
+  .movie-card {
+    height: 462px;
+  }
   .movies-list {
     display: flex;
     flex-wrap: wrap;
@@ -130,6 +134,7 @@
 
   .movie-card {
     width: 205px;
+    height: 368px;
   }
 
   .movie-genre {
