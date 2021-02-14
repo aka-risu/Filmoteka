@@ -14,9 +14,16 @@
   &:focus {
     outline: transparent;
   }
+
+  &:not(:last-child) {
+    margin-right: 3px;
+  }
 }
 
 .pag-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: transparent;
   &:hover,
   &:focus {
@@ -63,9 +70,8 @@
     transform: scale(1.15);
   }
 }
-
-@media screen and (min-width: 768px) {
-  .pagination *:not(:last-child) {
-    margin-right: 3px;
+@media screen and (max-width: 767px) {
+  .pagination * {
+    width: 28px;
   }
 }
