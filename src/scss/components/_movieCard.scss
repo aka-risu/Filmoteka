@@ -16,8 +16,8 @@
 }
 
 .movie-img {
-  // width: 280px;
-  // height: 402px;
+  width: 280px;
+  height: 402px;
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -103,10 +103,10 @@
     margin-bottom: 50px;
   }
 
-  // .movie-img {
-  //   width: 293px;
-  //   height: 398px;
-  // }
+  .movie-img {
+    width: 293px;
+    height: 398px;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -123,14 +123,14 @@
 }
 
 @media screen and (min-width: 1024px) {
-  // .movie-img {
-  //   width: 205px;
-  //   height: 308px;
-  // }
+  .movie-img {
+    width: 205px;
+    height: 308px;
+  }
 
   .movie-card {
     width: 205px;
-    height: 368px;
+    height: 390px;
   }
 
   .movie-genre {
@@ -154,6 +154,6 @@
   }
 
   .movie-card:not(:nth-last-child(-n + 4)) {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 }
